@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.obarcia.springboot.components.Utilities;
-import org.obarcia.demo.models.user.User;
+import org.obarcia.springboot.models.user.User;
 import org.obarcia.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 

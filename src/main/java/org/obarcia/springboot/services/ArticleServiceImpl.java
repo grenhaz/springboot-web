@@ -17,6 +17,7 @@ import org.obarcia.springboot.repositories.ArticleSimpleRepository;
 import org.obarcia.springboot.repositories.CommentLiteRepository;
 import org.obarcia.springboot.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,13 +59,20 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public DataTablesResponse<ArticleLite> getArticlesLite(DataTablesRequest req)
     {
-        return articleLiteRepository.getArticlesLite(req);
+        List<ArticleLite> records = articleLiteRepository.getArticles(new PageRequest(req.getStart(), req.getLength()));
+        DataTablesResponse<ArticleLite> response = new DataTablesResponse<>();
+        response.setDraw(req.getDraw());
+        response.setData(records);
+        response.setRecordsFiltered(records.size());
+        // TODO: Calcular el total
+        response.setRecordsTotal(records.size());
+        return response;
     }
     @Override
     @Transactional(readOnly = true)
     public DataTablesResponse<CommentLite> getCommentsLite(Integer id, DataTablesRequest req)
     {
-        return commentLiteRepository.getCommentsLite(id, req);
+        return commentLiteRepository.getComments(id, req);
     }
     @Override
     @Transactional(readOnly = true)

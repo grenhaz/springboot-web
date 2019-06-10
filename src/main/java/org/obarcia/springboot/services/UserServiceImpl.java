@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService
     @Transactional(readOnly = true)
     public DataTablesResponse<UserLite> getUsersLite(DataTablesRequest req)
     {
-        return userLiteRepository.getUsersLite(req);
+        return userLiteRepository.getUsers(req);
     }
     @Override
     @Transactional(readOnly = true)
