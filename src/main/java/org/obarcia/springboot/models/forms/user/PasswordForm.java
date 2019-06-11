@@ -1,4 +1,4 @@
-package org.obarcia.springboot.models.user;
+package org.obarcia.springboot.models.forms.user;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;

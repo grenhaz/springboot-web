@@ -9,10 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.obarcia.springboot.models.article.Article;
-import org.obarcia.springboot.models.article.Comment;
-import org.obarcia.springboot.models.user.User;
+import org.obarcia.springboot.models.entity.article.Article;
+import org.obarcia.springboot.models.entity.article.Comment;
+import org.obarcia.springboot.models.entity.user.User;
 import org.obarcia.springboot.repositories.ArticleRepository;
+import org.obarcia.springboot.repositories.CommentRepository;
+import org.obarcia.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,6 +43,16 @@ public class WebControllerTest
      */
     @MockBean
     public ArticleRepository articleRepository;
+    /**
+     * Repositorio de comentarios.
+     */
+    @MockBean
+    public CommentRepository commentRepository;
+    /**
+     * Repositorio de usuarios.
+     */
+    @MockBean
+    public UserRepository userRepository;
     /**
      * MVC de pruebas.
      */
@@ -86,6 +98,8 @@ public class WebControllerTest
         // Repositorios
         Mockito.when(articleRepository.countAll()).thenReturn((long)1);
         Mockito.when(articleRepository.findAll(Mockito.any(Pageable.class))).thenReturn(list);
+        Mockito.when(userRepository.findByNickname(Mockito.eq("admin"))).thenReturn(user);
+        // TODO: Información adicional
     }
     @Test
     public void accessIndexAnonymous()

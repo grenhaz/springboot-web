@@ -1,7 +1,7 @@
 package org.obarcia.springboot.services;
 
 import javax.servlet.http.HttpServletRequest;
-import org.obarcia.springboot.models.user.User;
+import org.obarcia.springboot.models.entity.user.User;
 
 /**
  * Servicio para el envío de emails.

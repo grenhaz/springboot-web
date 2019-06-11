@@ -1,6 +1,6 @@
 package org.obarcia.springboot.repositories;
 
-import org.obarcia.springboot.models.user.User;
+import org.obarcia.springboot.models.entity.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,10 +12,25 @@ import org.springframework.data.repository.query.Param;
  */
 public interface UserRepository extends CrudRepository<User, Integer>
 {
+    /**
+     * Devuelve un usuario por su UKEY.
+     * @param ukey UKEY a buscar.
+     * @return Instancia del usuario.
+     */
     @Query("SELECT u FROM User u WHERE ukey = :ukey")
-    User getUserByUkey(@Param("ukey") String ukey);
+    User findByUkey(@Param("ukey") String ukey);
+    /**
+     * Devuelve un usuario por su Nickname.
+     * @param nickname NIckname a buscar.
+     * @return Instancia del usuario.
+     */
     @Query("SELECT u FROM User u WHERE nickname = :nickname")
-    User getUserByNickname(@Param("nickname") String nickname);
+    User findByNickname(@Param("nickname") String nickname);
+    /**
+     * Devuelve un usuario por su e-mail.
+     * @param email e-mail a buscar.
+     * @return Instancia del usuario.
+     */
     @Query("SELECT u FROM User u WHERE email = :email")
-    User getUserByEmail(@Param("email") String email);
+    User findByEmail(@Param("email") String email);
 }

@@ -1,4 +1,4 @@
-package org.obarcia.springboot.models.browser;
+package org.obarcia.springboot.models;
 
 /**
  * Fichero del explorador.

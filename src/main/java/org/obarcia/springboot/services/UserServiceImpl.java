@@ -4,9 +4,7 @@ import org.hibernate.HibernateException;
 import org.obarcia.springboot.components.datatables.DataTablesRequest;
 import org.obarcia.springboot.components.datatables.DataTablesResponse;
 import org.obarcia.springboot.exceptions.SaveException;
-import org.obarcia.springboot.models.user.User;
-import org.obarcia.springboot.models.user.UserLite;
-import org.obarcia.springboot.repositories.UserLiteRepository;
+import org.obarcia.springboot.models.entity.user.User;
 import org.obarcia.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,15 +23,10 @@ public class UserServiceImpl implements UserService
      */
     @Autowired
     private UserRepository userRepository;
-    /**
-     * Instancia del repositorio de usuarios.
-     */
-    @Autowired
-    private UserLiteRepository userLiteRepository;
     
     @Override
     @Transactional(readOnly = true)
-    public DataTablesResponse<UserLite> getUsersLite(DataTablesRequest req)
+    public DataTablesResponse<User> getUsersLite(DataTablesRequest req)
     {
         // TODO: return userLiteRepository.getUsers(req);
         return null;
@@ -48,19 +41,19 @@ public class UserServiceImpl implements UserService
     @Transactional(readOnly = true)
     public User getUserByEmail(String email)
     {
-        return userRepository.getUserByEmail(email);
+        return userRepository.findByEmail(email);
     }
     @Override
     @Transactional(readOnly = true)
     public User getUserByNickname(String nickname)
     {
-        return userRepository.getUserByNickname(nickname);
+        return userRepository.findByNickname(nickname);
     }
     @Override
     @Transactional(readOnly = true)
     public User getUserByUkey(String ukey)
     {
-        return userRepository.getUserByUkey(ukey);
+        return userRepository.findByUkey(ukey);
     }
     @Override
     @Transactional

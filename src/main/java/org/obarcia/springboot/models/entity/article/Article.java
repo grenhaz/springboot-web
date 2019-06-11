@@ -1,24 +1,32 @@
-package org.obarcia.springboot.models.article;
+package org.obarcia.springboot.models.entity.article;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import javax.validation.constraints.NotEmpty;
 import org.obarcia.springboot.components.Utilities;
 
 /**
- * Superclase para los artículos.
+ * Artículo.
  * 
  * @author obarcia
  */
-@MappedSuperclass
-public class ArticleBase implements Serializable
+@Entity
+@Table(name = "article")
+public class Article
 {
     /**
      * Identificador.
@@ -82,6 +90,20 @@ public class ArticleBase implements Serializable
      */
     @Column(name = "active")
     private Boolean active;
+    /**
+     * Contenido.
+     */
+    @NotEmpty
+    @Size(max = 9000)
+    @Column(name = "content")
+    private String content;
+    /**
+     * Listado de comentarios.
+     */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    private final Set<Comment> comments = new HashSet<>();
     
     /**
      * Devuelve las etiquetas formateadas para visualización.
@@ -188,5 +210,21 @@ public class ArticleBase implements Serializable
     public void setActive(Boolean value)
     {
         active = value;
+    }
+    public String getContent()
+    {
+        return content;
+    }
+    public void setContent(String value)
+    {
+        content = value;
+    }
+    public Set<Comment> getComments()
+    {
+        return comments;
+    }
+    public int getCommentsCount()
+    {
+        return comments.size();
     }
 }

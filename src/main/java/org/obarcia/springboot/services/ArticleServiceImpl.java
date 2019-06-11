@@ -7,15 +7,9 @@ import org.obarcia.springboot.components.datatables.DataTablesResponse;
 import org.obarcia.springboot.components.datatables.DataTablesRequest;
 import org.obarcia.springboot.exceptions.SaveException;
 import org.obarcia.springboot.models.ListPagination;
-import org.obarcia.springboot.models.article.Article;
-import org.obarcia.springboot.models.article.ArticleLite;
-import org.obarcia.springboot.models.article.ArticleSimple;
-import org.obarcia.springboot.models.article.Comment;
-import org.obarcia.springboot.models.article.CommentLite;
-import org.obarcia.springboot.repositories.ArticleLiteRepository;
+import org.obarcia.springboot.models.entity.article.Article;
+import org.obarcia.springboot.models.entity.article.Comment;
 import org.obarcia.springboot.repositories.ArticleRepository;
-import org.obarcia.springboot.repositories.ArticleSimpleRepository;
-import org.obarcia.springboot.repositories.CommentLiteRepository;
 import org.obarcia.springboot.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -38,30 +32,17 @@ public class ArticleServiceImpl implements ArticleService
     @Autowired
     private ArticleRepository articleRepository;
     /**
-     * Instancia del repositorio de artículos.
-     */
-    @Autowired
-    private ArticleLiteRepository articleLiteRepository;
-    /**
-     * Instancia del repositorio de artículos.
-     */
-    @Autowired
-    private ArticleSimpleRepository articleSimpleRepository;
-    /**
      * Instancia del repositorio de comentarios.
      */
     @Autowired
     private CommentRepository commentRepository;
-    /**
-     * Instancia del repositorio de comentarios.
-     */
-    @Autowired
-    private CommentLiteRepository commentLiteRepository;
     
     @Override
     @Transactional(readOnly = true)
-    public DataTablesResponse<ArticleLite> getArticlesLite(DataTablesRequest req)
+    public DataTablesResponse<Article> getArticlesLite(DataTablesRequest req)
     {
+        // TODO: Aplciar filtros
+        
         // Orden
         Sort sort = Sort.unsorted();
         for (DataTablesOrder order: req.getOrders()) {
@@ -76,54 +57,40 @@ public class ArticleServiceImpl implements ArticleService
         Pageable pagination = PageRequest.of(req.getPage(), req.getLength(), sort);
         
         // Obtener los registros
-        List<ArticleLite> records = articleLiteRepository.findAll(pagination);
-        DataTablesResponse<ArticleLite> response = new DataTablesResponse<>();
+        List<Article> records = articleRepository.findAll(pagination);
+        DataTablesResponse<Article> response = new DataTablesResponse<>();
         response.setDraw(req.getDraw());
         response.setData(records);
         response.setRecordsFiltered((long)records.size());
-        response.setRecordsTotal(articleLiteRepository.countAll());
+        response.setRecordsTotal(articleRepository.count());
         return response;
     }
     @Override
     @Transactional(readOnly = true)
-    public DataTablesResponse<CommentLite> getCommentsLite(Integer id, DataTablesRequest req)
+    public DataTablesResponse<Comment> getCommentsLite(Integer id, DataTablesRequest req)
     {
         //TODO: return commentLiteRepository.getComments(id, req);
         return null;
     }
     @Override
     @Transactional(readOnly = true)
-    public ListPagination<ArticleSimple> getArticlesAll(int page, int perPage)
+    public ListPagination<Article> getArticlesAll(int page, int perPage)
     {
-        /*TODO: ListPagination<ArticleSimple> list = articleSimpleRepository.getArticles(page, perPage, null, null);
-        // Obtener el contador de comentarios
-        if (list.getRecords() != null) {
-            for (ArticleSimple a: list.getRecords()) {
-                a.getCommentsCount();
-            }
-        }
+        List<Article> slist = articleRepository.findAll(PageRequest.of(page, perPage, Sort.by("id")));
         
-        return list;*/
-        return null;
+        return createListPagination(page, perPage, articleRepository.count(), slist);
     }
     @Override
     @Transactional(readOnly = true)
-    public ListPagination<ArticleSimple> getArticlesAll(int page, int perPage, String type)
+    public ListPagination<Article> getArticlesAll(int page, int perPage, String type)
     {
-        /*TODO: ListPagination<ArticleSimple> list = articleSimpleRepository.getArticles(page, perPage, null, type);
-        // Obtener el contador de comentarios
-        if (list.getRecords() != null) {
-            for (ArticleSimple a: list.getRecords()) {
-                a.getCommentsCount();
-            }
-        }
+        List<Article> slist = articleRepository.findByType(type, PageRequest.of(page, perPage, Sort.by("id")));
         
-        return list;*/
-        return null;
+        return createListPagination(page, perPage, articleRepository.countByType(type), slist);
     }
     @Override
     @Transactional(readOnly = true)
-    public ListPagination<ArticleSimple> getArticlesAll(int page, int perPage, String tag, String type)
+    public ListPagination<Article> getArticlesAll(int page, int perPage, String tag, String type)
     {
         /*TODO: ListPagination<ArticleSimple> list = articleSimpleRepository.getArticles(page, perPage, tag, type);
         // Obtener el contador de comentarios
@@ -138,7 +105,7 @@ public class ArticleServiceImpl implements ArticleService
     }
     @Override
     @Transactional(readOnly = true)
-    public ListPagination<ArticleSimple> getArticlesSearch(int page, int perPage, String tag, String search)
+    public ListPagination<Article> getArticlesSearch(int page, int perPage, String tag, String search)
     {
         /*TODO: ListPagination<ArticleSimple> list = articleSimpleRepository.getArticlesSearch(page, perPage, tag, search);
         // Obtener el contador de comentarios
@@ -151,9 +118,26 @@ public class ArticleServiceImpl implements ArticleService
         return list;*/
         return null;
     }
+    private ListPagination createListPagination(int page, int perPage, long total, List<Article> slist)
+    {
+        // Obtener el contador de comentarios
+        if (slist != null) {
+            for (Article a: slist) {
+                a.getCommentsCount();
+            }
+        }
+        
+        // Listado paginado
+        ListPagination list = new ListPagination();
+        list.setRecords(slist);
+        list.setOffset(page * perPage);
+        list.setLimit(perPage);
+        list.setTotal(total);
+        return list;
+    }
     @Override
     @Transactional(readOnly = true)
-    public List<ArticleSimple> getArticlesImportants(String tag)
+    public List<Article> getArticlesImportants(String tag)
     {
         /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticlesImportant(tag, null, 3);
         // Obtener el contador de comentarios
@@ -168,7 +152,7 @@ public class ArticleServiceImpl implements ArticleService
     }
     @Override
     @Transactional(readOnly = true)
-    public List<ArticleSimple> getArticlesImportants(String tag, String type)
+    public List<Article> getArticlesImportants(String tag, String type)
     {
         /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticlesImportant(tag, type, 3);
         // Obtener el contador de comentarios
@@ -183,7 +167,7 @@ public class ArticleServiceImpl implements ArticleService
     }
     @Override
     @Transactional(readOnly = true)
-    public List<ArticleSimple> getArticlesByType(String tag, String type, int count)
+    public List<Article> getArticlesByType(String tag, String type, int count)
     {
         /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticles(0, count, tag, type).getRecords();
         // Obtener el contador de comentarios
@@ -198,7 +182,7 @@ public class ArticleServiceImpl implements ArticleService
     }
     @Override
     @Transactional(readOnly = true)
-    public List<ArticleSimple> getArticlesMoreComments(String tag, int count)
+    public List<Article> getArticlesMoreComments(String tag, int count)
     {
         /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticlesMoreComments(tag, count);
         // Obtener el contador de comentarios

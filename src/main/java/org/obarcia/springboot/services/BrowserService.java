@@ -1,7 +1,7 @@
 package org.obarcia.springboot.services;
 
 import java.util.List;
-import org.obarcia.springboot.models.browser.FileBrowser;
+import org.obarcia.springboot.models.FileBrowser;
 
 /**
  * Servicio del explorador de archivos.

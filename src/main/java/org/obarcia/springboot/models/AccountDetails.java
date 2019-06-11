@@ -1,4 +1,4 @@
-package org.obarcia.springboot.models.user;
+package org.obarcia.springboot.models;
 
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;

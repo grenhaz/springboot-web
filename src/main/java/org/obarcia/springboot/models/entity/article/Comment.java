@@ -1,24 +1,29 @@
-package org.obarcia.springboot.models.article;
+package org.obarcia.springboot.models.entity.article;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import org.obarcia.springboot.components.Utilities;
+import org.obarcia.springboot.models.entity.user.User;
 
 /**
- * Superclase para los comentarios.
+ * Comentario de un artículo.
  * 
  * @author obarcia
  */
-@MappedSuperclass
-public class CommentBase implements Serializable
+@Entity
+@Table(name = "comment")
+public class Comment
 {
     /**
      * Identificador.
@@ -45,6 +50,18 @@ public class CommentBase implements Serializable
      */
     @Column(name = "erased")
     private Boolean erased = Boolean.FALSE;
+    /**
+     * Artículo.
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_article", nullable = false)
+    private Article article;
+    /**
+     * Usuario.
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_user", nullable = false)
+    private User user;
     
     /**
      * Devuelve el contenido reducido.
@@ -100,5 +117,21 @@ public class CommentBase implements Serializable
     public void setErased(Boolean value)
     {
         erased = value;
+    }
+    public Article getArticle()
+    {
+        return article;
+    }
+    public void setArticle(Article value)
+    {
+        article = value;
+    }
+    public User getUser()
+    {
+        return user;
+    }
+    public void setUser(User value)
+    {
+        user = value;
     }
 }

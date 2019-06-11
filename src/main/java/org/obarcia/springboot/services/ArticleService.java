@@ -5,11 +5,8 @@ import org.obarcia.springboot.components.datatables.DataTablesResponse;
 import org.obarcia.springboot.components.datatables.DataTablesRequest;
 import org.obarcia.springboot.exceptions.SaveException;
 import org.obarcia.springboot.models.ListPagination;
-import org.obarcia.springboot.models.article.Article;
-import org.obarcia.springboot.models.article.ArticleLite;
-import org.obarcia.springboot.models.article.ArticleSimple;
-import org.obarcia.springboot.models.article.Comment;
-import org.obarcia.springboot.models.article.CommentLite;
+import org.obarcia.springboot.models.entity.article.Article;
+import org.obarcia.springboot.models.entity.article.Comment;
 
 /**
  * Servicio de artículos y comentarios.
@@ -24,7 +21,7 @@ public interface ArticleService
      * @param req Instancia de la petición.
      * @return Listado de artículos.
      */
-    public DataTablesResponse<ArticleLite> getArticlesLite(DataTablesRequest req);
+    public DataTablesResponse<Article> getArticlesLite(DataTablesRequest req);
     /**
      * DataTables: Devuelve el listado de comentarios en función a los parámetros
      * indicados por la petición DataTables.
@@ -32,14 +29,14 @@ public interface ArticleService
      * @param req Instancia de la petición.
      * @return Listado de comentarios.
      */
-    public DataTablesResponse<CommentLite> getCommentsLite(Integer id, DataTablesRequest req);
+    public DataTablesResponse<Comment> getCommentsLite(Integer id, DataTablesRequest req);
     /**
      * Devuelve un listado de artículos.
      * @param page Página.
      * @param perPage Registros por página.
      * @return Listado de artículos
      */
-    public ListPagination<ArticleSimple> getArticlesAll(int page, int perPage);
+    public ListPagination<Article> getArticlesAll(int page, int perPage);
     /**
      * Devuelve un listado de artículos.
      * @param page Página.
@@ -47,7 +44,7 @@ public interface ArticleService
      * @param type Tipo de artículo.
      * @return Listado de artículos
      */
-    public ListPagination<ArticleSimple> getArticlesAll(int page, int perPage, String type);
+    public ListPagination<Article> getArticlesAll(int page, int perPage, String type);
     /**
      * Devuelve un listado de artículos.
      * @param page Página.
@@ -56,7 +53,7 @@ public interface ArticleService
      * @param type Tipo de artículo.
      * @return Listado de artículos
      */
-    public ListPagination<ArticleSimple> getArticlesAll(int page, int perPage, String tag, String type);
+    public ListPagination<Article> getArticlesAll(int page, int perPage, String tag, String type);
     /**
      * Búsqueda de artículos.
      * @param page Página.
@@ -65,20 +62,20 @@ public interface ArticleService
      * @param search Texto de búsqueda.
      * @return Listado de artículos
      */
-    public ListPagination<ArticleSimple> getArticlesSearch(int page, int perPage, String tag, String search);
+    public ListPagination<Article> getArticlesSearch(int page, int perPage, String tag, String search);
     /**
      * Devuelve un listado de artículos marcados como imporatantes.
      * @param tag Etiqueta de búsqueda.
      * @return Listado de artículos.
      */
-    public List<ArticleSimple> getArticlesImportants(String tag);
+    public List<Article> getArticlesImportants(String tag);
     /**
      * Devuelve un listado de artículos marcados como imporatantes.
      * @param tag Etiqueta de búsqueda.
      * @param type Tipo de artículo
      * @return Listado de artículos.
      */
-    public List<ArticleSimple> getArticlesImportants(String tag, String type);
+    public List<Article> getArticlesImportants(String tag, String type);
     /**
      * Devuelve un listado de artículos por tipo.
      * @param tag Etiqueta.
@@ -86,7 +83,7 @@ public interface ArticleService
      * @param count Número de registros.
      * @return Listado de artículos.
      */
-    public List<ArticleSimple> getArticlesByType(String tag, String type, int count);
+    public List<Article> getArticlesByType(String tag, String type, int count);
     /**
      * Devuelve un listado de artículos ordenados por número de comentarios.
      * De más comentado a menos.
@@ -94,7 +91,7 @@ public interface ArticleService
      * @param count Número de registros.
      * @return Listado de artículos.
      */
-    public List<ArticleSimple> getArticlesMoreComments(String tag, int count);
+    public List<Article> getArticlesMoreComments(String tag, int count);
     /**
      * Devuelve un listado de comentarios de un artículo.
      * @param id Identificador del artículo.

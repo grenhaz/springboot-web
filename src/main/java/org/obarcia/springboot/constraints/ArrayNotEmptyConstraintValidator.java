@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.obarcia.springboot.components.Utilities;
-import org.obarcia.springboot.models.user.User;
+import org.obarcia.springboot.models.entity.user.User;
 
 /**
  * Constraint Validator para el uso único de un nickname.

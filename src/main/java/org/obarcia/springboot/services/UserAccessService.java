@@ -2,7 +2,7 @@ package org.obarcia.springboot.services;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.obarcia.springboot.models.user.AccountDetails;
+import org.obarcia.springboot.models.AccountDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,7 +29,7 @@ public class UserAccessService implements UserDetailsService
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException
     {
         // Obtener el usuario por su email
-        org.obarcia.springboot.models.user.User user = userService.getUserByEmail(string);
+        org.obarcia.springboot.models.entity.user.User user = userService.getUserByEmail(string);
         if (user != null && user.getActive().equals(Boolean.TRUE)) {
             Set<GrantedAuthority> auths = new HashSet<>();
             auths.add(new SimpleGrantedAuthority(user.getUserRole()));

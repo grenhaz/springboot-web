@@ -1,7 +1,7 @@
 package org.obarcia.springboot.repositories;
 
 import java.util.List;
-import org.obarcia.springboot.models.article.Comment;
+import org.obarcia.springboot.models.entity.article.Comment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,8 +13,11 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface CommentRepository extends CrudRepository<Comment, Integer>
 {
-    @Query("SELECT count(c) FROM Comment c")
-    Long countAll();
+    /**
+     * Listado paginado de comentarios.
+     * @param pageable Instancia de la pafinación.
+     * @return Listado de comentarios.
+     */
     List<Comment> findAll(Pageable pageable);
     /**
      * Devuelve los comentarios por artículo.

@@ -1,4 +1,4 @@
-package org.obarcia.springboot.models.article;
+package org.obarcia.springboot.models.forms.article;
 
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotEmpty;

@@ -3,8 +3,7 @@ package org.obarcia.springboot.services;
 import org.obarcia.springboot.components.datatables.DataTablesRequest;
 import org.obarcia.springboot.components.datatables.DataTablesResponse;
 import org.obarcia.springboot.exceptions.SaveException;
-import org.obarcia.springboot.models.user.User;
-import org.obarcia.springboot.models.user.UserLite;
+import org.obarcia.springboot.models.entity.user.User;
 
 /**
  * Servicio de usuarios.
@@ -18,7 +17,7 @@ public interface UserService
      * @param req Instancia de la petición.
      * @return Listado de usuarios.
      */
-    public DataTablesResponse<UserLite> getUsersLite(DataTablesRequest req);
+    public DataTablesResponse<User> getUsersLite(DataTablesRequest req);
     /**
      * Busca un usuario por su identificador.
      * @param id Identificador.

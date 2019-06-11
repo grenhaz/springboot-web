@@ -1,4 +1,4 @@
-package org.obarcia.springboot.models.article;
+package org.obarcia.springboot.models.forms.article;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -12,15 +12,15 @@ public class ListPagination<T>
     /**
      * Inicio.
      */
-    private Integer offset;
+    private Integer offset = 0;
     /**
      * Número de registros por página.
      */
-    private Integer limit;
+    private Integer limit = 0;
     /**
      * Total de registros.
      */
-    private Integer total;
+    private Long total = (long)0;
     /**
      * Registros.
      */
@@ -53,7 +53,7 @@ public class ListPagination<T>
     public Integer getPages()
     {
         if (limit > 0) {
-            return (total / limit) + (total % limit > 0 ? 1 : 0);
+            return (total.intValue() / limit) + (total.intValue() % limit > 0 ? 1 : 0);
         }
         
         return 1;
@@ -77,11 +77,11 @@ public class ListPagination<T>
     {
         limit = value;
     }
-    public Integer getTotal()
+    public Long getTotal()
     {
         return total;
     }
-    public void setTotal(Integer value)
+    public void setTotal(Long value)
     {
         total = value;
     }

@@ -3,9 +3,9 @@ package org.obarcia.springboot.config;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.obarcia.springboot.exceptions.SaveException;
-import org.obarcia.springboot.models.article.Article;
-import org.obarcia.springboot.models.article.Comment;
-import org.obarcia.springboot.models.user.User;
+import org.obarcia.springboot.models.entity.article.Article;
+import org.obarcia.springboot.models.entity.article.Comment;
+import org.obarcia.springboot.models.entity.user.User;
 import org.obarcia.springboot.services.ArticleService;
 import org.obarcia.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +42,12 @@ public class DevConfig
         try {
             String content = "<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu</p><p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p><p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,</p>";
             // Usuarios
-            createUser("administrador", null, "admin@test.com", "password", "ROLE_ADMIN");
-            createUser("obarcia", "avatar1.jpg", "user@test.com", "password", "ROLE_USER");
-            createUser("Heck", "avatar2.jpg", "yo@test.com", "password", "ROLE_USER");
-            createUser("Tester", "avatar3.jpg", "yo2@test.com", "password", "ROLE_USER");
-            createUser("Tester2", "avatar3.jpg", "yo3@test.com", "password", "ROLE_USER");
-            createUser("Tester3", "avatar3.jpg", "yo4@test.com", "password", "ROLE_USER");
+            createUser("administrador", null, "admin@test.com", "password", "ADMIN");
+            createUser("obarcia", "avatar1.jpg", "user@test.com", "password", "USER");
+            createUser("Heck", "avatar2.jpg", "yo@test.com", "password", "USER");
+            createUser("Tester", "avatar3.jpg", "yo2@test.com", "password", "USER");
+            createUser("Tester2", "avatar3.jpg", "yo3@test.com", "password", "USER");
+            createUser("Tester3", "avatar3.jpg", "yo4@test.com", "password", "USER");
             // Artículos
             createArticle("new", "game.jpg", "Mañana es el cierre de servidores de Demon's Souls", "El clásico de PlayStation 3 cortará a partir de mañana sus posibilidades on-line definitivamente.", content, "[PC]", null, true, 3);
             createArticle("new", "game1.jpg", "El rodaje de la serie televisiva de Halo comenzaría a finales de 2018", "El afamado director Steven Spielberg continuaría vinculado al proyecto.", content, "[PC][PS4]", null, false, 5);

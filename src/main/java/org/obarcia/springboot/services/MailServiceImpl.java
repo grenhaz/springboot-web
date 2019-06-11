@@ -6,7 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import javax.servlet.http.HttpServletRequest;
-import org.obarcia.springboot.models.user.User;
+import org.obarcia.springboot.models.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;

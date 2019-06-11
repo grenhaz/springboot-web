@@ -10,14 +10,11 @@ import org.obarcia.springboot.exceptions.ArticleNotFoundException;
 import org.obarcia.springboot.exceptions.SaveException;
 import org.obarcia.springboot.exceptions.UserNotFoundException;
 import org.obarcia.springboot.models.ActionResponse;
-import org.obarcia.springboot.models.article.Article;
-import org.obarcia.springboot.models.article.ArticleForm;
-import org.obarcia.springboot.models.article.ArticleLite;
-import org.obarcia.springboot.models.article.Comment;
-import org.obarcia.springboot.models.article.CommentLite;
-import org.obarcia.springboot.models.user.User;
-import org.obarcia.springboot.models.user.UserForm;
-import org.obarcia.springboot.models.user.UserLite;
+import org.obarcia.springboot.models.entity.article.Article;
+import org.obarcia.springboot.models.forms.article.ArticleForm;
+import org.obarcia.springboot.models.entity.article.Comment;
+import org.obarcia.springboot.models.entity.user.User;
+import org.obarcia.springboot.models.entity.user.UserForm;
 import org.obarcia.springboot.services.ArticleService;
 import org.obarcia.springboot.services.BrowserService;
 import org.obarcia.springboot.services.MailService;
@@ -103,7 +100,7 @@ public class AdminController
      * @return JSON resultante.
      */
     @GetMapping("/ajax/users")
-    public @ResponseBody DataTablesResponse<UserLite> actionUsersAjax(HttpServletRequest request)
+    public @ResponseBody DataTablesResponse<User> actionUsersAjax(HttpServletRequest request)
     {
         return userService.getUsersLite(new DataTablesRequest(request));
     }
@@ -134,7 +131,7 @@ public class AdminController
      * @return JSON resultante.
      */
     @GetMapping("/ajax/articles")
-    public @ResponseBody DataTablesResponse<ArticleLite> actionArticlesAjax(HttpServletRequest request)
+    public @ResponseBody DataTablesResponse<Article> actionArticlesAjax(HttpServletRequest request)
     {
         return articleService.getArticlesLite(new DataTablesRequest(request));
     }
@@ -145,7 +142,7 @@ public class AdminController
      * @return JSON resultante.
      */
     @GetMapping("/ajax/comments/{id}")
-    public @ResponseBody DataTablesResponse<CommentLite> actionArticlesAjax(
+    public @ResponseBody DataTablesResponse<Comment> actionArticlesAjax(
             @PathVariable("id") int id,
             HttpServletRequest request)
     {

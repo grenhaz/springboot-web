@@ -1,22 +1,32 @@
-package org.obarcia.springboot.models.user;
+package org.obarcia.springboot.models.entity.user;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import org.obarcia.springboot.constraints.EmailUniqueConstraint;
 import org.obarcia.springboot.constraints.NicknameConstraint;
 
 /**
- * Formulario de perfil del usuario.
+ * Formulario del usuario.
  * 
  * @author obarcia
  */
 @NicknameConstraint(field = "nickname", message = "{error.nickname.invalid}")
-public class ProfileForm
+@EmailUniqueConstraint(field = "email", message = "{error.email.unique}")
+public class UserForm
 {
     /**
-     * Identificador del usuario.
+     * Identificador.
      */
     private Integer id;
+    /**
+     * Email.
+     */
+    @NotEmpty(message = "{error.NotEmpty}")
+    @Email
+    @Size(max = 128)
+    private String email;
     /**
      * Nickname.
      */
@@ -24,11 +34,6 @@ public class ProfileForm
     @Size(max = 32)
     @Pattern(regexp = "^[A-Za-z0-9_-]+$", message = "{error.NicknamePattern}")
     private String nickname;
-    /**
-     * Fichero que hace de avatar.
-     */
-    @Size(max = 64)
-    private String avatar;
     
     // ******************************************
     // GETTER & SETTER
@@ -41,6 +46,14 @@ public class ProfileForm
     {
         id = value;
     }
+    public String getEmail()
+    {
+        return email;
+    }
+    public void setEmail(String value)
+    {
+        email = value;
+    }
     public String getNickname()
     {
         return nickname;
@@ -48,13 +61,5 @@ public class ProfileForm
     public void setNickname(String value)
     {
         nickname = value;
-    }
-    public String getAvatar()
-    {
-        return avatar;
-    }
-    public void setAvatar(String value)
-    {
-        avatar = value;
     }
 }

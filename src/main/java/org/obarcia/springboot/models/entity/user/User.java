@@ -1,17 +1,18 @@
-package org.obarcia.springboot.models.user;
+package org.obarcia.springboot.models.entity.user;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import org.obarcia.springboot.components.Utilities;
 
 /**
@@ -19,8 +20,9 @@ import org.obarcia.springboot.components.Utilities;
  * 
  * @author obarcia
  */
-@MappedSuperclass
-public class UserBase implements Serializable
+@Entity
+@Table(name = "usuario")
+public class User
 {
     public static final String ROLE_USER = "ROLE_USER";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
@@ -72,6 +74,21 @@ public class UserBase implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created")
     private Date created;
+    /**
+     * Contraseña.
+     */
+    @NotEmpty
+    @Size(max = 64)
+    @JsonIgnore
+    @Column(name = "password")
+    private String password;
+    /**
+     * Clave para activación y cambio de contraseña.
+     */
+    @Size(max = 64)
+    @JsonIgnore
+    @Column(name = "ukey")
+    private String ukey;
     
     /**
      * Devuelve la fecha de alta formateada.
@@ -139,5 +156,21 @@ public class UserBase implements Serializable
     public void setCreated(Date value)
     {
         created = value;
+    }
+    public String getPassword()
+    {
+        return password;
+    }
+    public void setPassword(String value)
+    {
+        password = value;
+    }
+    public String getUkey()
+    {
+        return ukey;
+    }
+    public void setUkey(String value)
+    {
+        ukey = value;
     }
 }
