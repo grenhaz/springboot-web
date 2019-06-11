@@ -37,12 +37,12 @@ public class WebController
     /**
      * Artículos por página.
      */
-    @Value("#{new Integer('${articles.perPage}')}")
+    @Value("${articles.perPage:10}")
     private int ARTICLES_PER_PAGE;
     /**
      * Comentarios por página.
      */
-    @Value("#{new Integer('${comments.perPage}')}")
+    @Value("${comments.perPage:10}")
     private int COMMENTS_PER_PAGE;
 
     /**

@@ -12,15 +12,15 @@ public class DataTablesResponse<T>
     /**
      * draw: Debecoincidir con el draw de la petición
      */
-    private int draw = 1;
+    private Integer draw = 1;
     /**
      * Total de registros.
      */
-    private int recordsTotal = 0;
+    private Long recordsTotal = (long)0;
     /**
      * Total de registros filtrados.
      */
-    private int recordsFiltered = 0;
+    private Long recordsFiltered = (long)0;
     /**
      * Registros.
      */
@@ -29,27 +29,27 @@ public class DataTablesResponse<T>
     // ******************************************
     // GETTER & SETTER
     // ******************************************
-    public int getDraw()
+    public Integer getDraw()
     {
         return draw;
     }
-    public void setDraw(int value)
+    public void setDraw(Integer value)
     {
         draw = value;
     }
-    public int getRecordsTotal()
+    public Long getRecordsTotal()
     {
         return recordsTotal;
     }
-    public void setRecordsTotal(int value)
+    public void setRecordsTotal(Long value)
     {
         recordsTotal = value;
     }
-    public int getRecordsFiltered()
+    public Long getRecordsFiltered()
     {
         return recordsFiltered;
     }
-    public void setRecordsFiltered(int value)
+    public void setRecordsFiltered(Long value)
     {
         recordsFiltered = value;
     }

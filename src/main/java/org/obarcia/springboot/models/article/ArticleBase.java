@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 import org.obarcia.springboot.components.Utilities;
 
 /**
@@ -54,13 +54,6 @@ public class ArticleBase implements Serializable
     @Size(max = 250)
     @Column(name = "image")
     private String image;
-    /**
-     * Contenido.
-     */
-    @NotEmpty
-    @Size(max = 9000)
-    @Column(name = "content")
-    private String content;
     /**
      * Fecha de publicación.
      */

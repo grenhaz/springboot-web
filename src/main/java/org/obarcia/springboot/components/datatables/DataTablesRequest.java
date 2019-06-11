@@ -129,6 +129,18 @@ public class DataTablesRequest
         
         return null;
     }
+    /**
+     * Devuelve la página actual.
+     * @return Página actual.
+     */
+    public Integer getPage()
+    {
+        if (length > 0) {
+            return start / length;
+        } else {
+            return 0;
+        }
+    }
     // ******************************************
     // GETTER & SETTER
     // ******************************************

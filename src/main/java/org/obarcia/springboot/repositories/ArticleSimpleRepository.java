@@ -2,6 +2,7 @@ package org.obarcia.springboot.repositories;
 
 import java.util.List;
 import org.obarcia.springboot.models.article.ArticleSimple;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -12,6 +13,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ArticleSimpleRepository extends CrudRepository<ArticleSimple, Integer>
 {
-    @Query("SELECT a FROM ArticleSimple a")
-    List<ArticleSimple> getArticles();
+    @Query("SELECT count(a) FROM ArticleSimple a")
+    Long countAll();
+    List<ArticleSimple> findAll(Pageable pageable);
 }

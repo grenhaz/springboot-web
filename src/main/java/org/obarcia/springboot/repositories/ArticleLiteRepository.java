@@ -13,6 +13,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ArticleLiteRepository extends CrudRepository<ArticleLite, Integer>
 {
-    @Query("SELECT a FROM ArticleLite a")
-    List<ArticleLite> getArticles(Pageable pageable);
+    @Query("SELECT count(a) FROM ArticleLite a")
+    Long countAll();
+    List<ArticleLite> findAll(Pageable pageable);
 }

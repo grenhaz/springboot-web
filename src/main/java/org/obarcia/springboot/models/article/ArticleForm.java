@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 import org.obarcia.springboot.constraints.ArrayNotEmptyConstraint;
 
 /**
