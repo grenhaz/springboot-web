@@ -5,6 +5,7 @@ import org.obarcia.springboot.models.entity.article.Comment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Repositorio de comentarios.
@@ -26,7 +27,7 @@ public interface CommentRepository extends CrudRepository<Comment, Integer>
      * @return Listado de comentarios.
      */
     @Query("SELECT c FROM Comment c WHERE c.article.id = :idArticle")
-    List<Comment> findByArticle(Integer idArticle, Pageable pageable);
+    List<Comment> findByArticle(@Param("idArticle") Integer idArticle, Pageable pageable);
     /**
      * Devuelve los comentarios por usuario.
      * @param idUser Identificador del usuario.
@@ -34,5 +35,5 @@ public interface CommentRepository extends CrudRepository<Comment, Integer>
      * @return Listado de comentarios.
      */
     @Query("SELECT c FROM Comment c WHERE c.user.id = :idUser")
-    List<Comment> findByUser(Integer idUser, Pageable pageable);
+    List<Comment> findByUser(@Param("idUser") Integer idUser, Pageable pageable);
 }

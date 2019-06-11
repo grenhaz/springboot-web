@@ -5,7 +5,7 @@
 <%@taglib prefix="ui" uri="http://www.obarcia.com/tags" %>
 <!-- ADD COMMENTS -->
 <sec:authorize access="isAuthenticated()">
-    <form:form commandName="comment" id="form-comment">
+    <form:form modelAttribute="comment" id="form-comment">
         <div class="row">
             <div class="col-xs-12">
                 <div class="form-group">

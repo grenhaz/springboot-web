@@ -96,7 +96,7 @@ public class WebControllerTest
         list.add(article);
         
         // Repositorios
-        Mockito.when(articleRepository.countAll()).thenReturn((long)1);
+        Mockito.when(articleRepository.count()).thenReturn((long)1);
         Mockito.when(articleRepository.findAll(Mockito.any(Pageable.class))).thenReturn(list);
         Mockito.when(userRepository.findByNickname(Mockito.eq("admin"))).thenReturn(user);
         // TODO: Información adicional

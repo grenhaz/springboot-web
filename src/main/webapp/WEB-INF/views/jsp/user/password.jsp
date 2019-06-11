@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-sm-offset-3 col-xs-12 col-sm-6">
                 <div class="header"><spring:message code="label.user.profile.password" /></div>
-                <form:form commandName="form" method="POST">
+                <form:form modelAttribute="form" method="POST">
                     <form:hidden path="id" />
                     <div class="form-group">
                         <form:label path="password"><spring:message code="label.password" /></form:label>

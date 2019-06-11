@@ -11,7 +11,7 @@
             <div class="header"><spring:message code="title.forgot.info" /></div>
             <div class="row">
                 <div class="col-xs-4 left">
-                    <form:form commandName="model" method="POST">
+                    <form:form modelAttribute="model" method="POST">
                         <div class="form-group">
                             <form:label path="email"><spring:message code="label.email" /></form:label>
                             <form:input class="form-control" path="email" maxlength="128" />

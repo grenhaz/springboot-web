@@ -6,7 +6,7 @@
 <ui:layout title="${title}" tag="admin" flash="${flash}">
     <div class="section">
         <div class="header"><spring:message code="label.admin.article" />: <c:out value="${form.id}" /></div>
-        <form:form commandName="form" method="POST">
+        <form:form modelAttribute="form" method="POST">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#tab-data" aria-controls="tab-data" role="tab" data-toggle="tab"><spring:message code="label.admin.data" /></a></li>
                 <li role="presentation"><a href="#tab-content" aria-controls="tab-content" role="tab" data-toggle="tab"><spring:message code="label.content" /></a></li>

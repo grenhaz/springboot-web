@@ -24,8 +24,8 @@ import org.obarcia.springboot.components.Utilities;
 @Table(name = "usuario")
 public class User
 {
-    public static final String ROLE_USER = "ROLE_USER";
-    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_USER = "USER";
+    public static final String ROLE_ADMIN = "ADMIN";
     
     /**
      * Identificador.

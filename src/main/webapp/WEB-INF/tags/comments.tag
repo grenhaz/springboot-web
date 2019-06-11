@@ -3,7 +3,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="ui" uri="http://www.obarcia.com/tags" %>
-<%@attribute name="comments" required="true" type="org.obarcia.demo.models.ListPagination" rtexprvalue="true" %>
+<%@attribute name="comments" required="true" type="org.obarcia.springboot.models.ListPagination" rtexprvalue="true" %>
 <div class="header"><spring:message code="title.comments" /> <span class="badge"><c:out value="${comments.total}" /></span></div>
 <c:if test="${not empty comments.records}">
     <c:forEach var="comment" items="${comments.records}">

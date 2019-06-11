@@ -1,7 +1,7 @@
 <%@tag description="Article" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@attribute name="article" required="true" type="org.obarcia.demo.models.article.ArticleSimple" rtexprvalue="true" %>
+<%@attribute name="article" required="true" type="org.obarcia.springboot.models.entity.article.Article" rtexprvalue="true" %>
 <%@attribute name="position" required="true" %>
 <div class="article ${position}">
     <!-- IMAGE -->

@@ -9,7 +9,7 @@
         <div class="header"><spring:message code="label.user.profile" /></div>
         <div class="row">
             <div class="col-xs-6 col-sm-3">
-                <form:form commandName="form" method="POST">
+                <form:form modelAttribute="form" method="POST">
                     <form:hidden path="id" />
                     <div class="form-group">
                         <div class="avatar">

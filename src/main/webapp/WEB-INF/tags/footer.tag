@@ -1,11 +1,11 @@
 <%@tag description="Footer" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<spring:eval expression="@configProperties.getProperty('footer.facebook')" var="facebook" />
-<spring:eval expression="@configProperties.getProperty('footer.google')" var="google" />
-<spring:eval expression="@configProperties.getProperty('footer.twitter')" var="twitter" />
-<spring:eval expression="@configProperties.getProperty('footer.skype')" var="skype" />
-<spring:eval expression="@configProperties.getProperty('footer.instagram')" var="instagram" />
+<spring:eval expression="@environment.getProperty('footer.facebook')" var="facebook" />
+<spring:eval expression="@environment.getProperty('footer.google')" var="google" />
+<spring:eval expression="@environment.getProperty('footer.twitter')" var="twitter" />
+<spring:eval expression="@environment.getProperty('footer.skype')" var="skype" />
+<spring:eval expression="@environment.getProperty('footer.instagram')" var="instagram" />
 
 <footer>
     <div class="row">

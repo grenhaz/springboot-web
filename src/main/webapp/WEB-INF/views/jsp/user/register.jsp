@@ -11,7 +11,7 @@
             <div class="header"><spring:message code="title.register.info" /></div>
             <div class="row">
                 <div class="col-xs-4 left">
-                    <form:form commandName="model" method="POST">
+                    <form:form modelAttribute="model" method="POST">
                         <div class="form-group">
                             <form:label path="nickname"><spring:message code="label.nickname" /></form:label>
                             <form:input class="form-control" path="nickname" maxlength="32" />

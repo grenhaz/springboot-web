@@ -72,7 +72,7 @@
                     <li ${tag == "games" ? "class='active'" : "" }>
                         <a href="<c:url value="/" />"><spring:message code="label.section.home" /></a>
                     </li>
-                    <spring:eval expression="@configProperties.getProperty('sections.tags')" var="tags" />
+                    <spring:eval expression="@environment.getProperty('sections.tags')" var="tags" />
                     <c:forEach items="${tags}" var="t">
                         <li ${tag == t.toLowerCase() ? "class='active'" : "" }>
                             <a href="<c:url value="/web/${t.toLowerCase()}" />"><c:out value="${t}" /></a>
@@ -86,7 +86,7 @@
                             <a href="<c:url value="/user/profile" />"><spring:message code="label.section.community" /></a>
                         </sec:authorize>
                     </li>
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <sec:authorize access="hasRole('ADMIN')">
                         <li ${tag == 'admin' ? "class='active'" : "" }>
                             <a href="<c:url value="/admin/index" />"><spring:message code="label.section.admin" /></a>
                         </li>
@@ -106,7 +106,7 @@
                         </sec:authorize>
                     </c:if>
                     <c:if test="${tag == 'admin'}">
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <sec:authorize access="hasRole('ADMIN')">
                             <li><a href="<c:url value="/admin/index" />"><spring:message code="label.admin.index" /></a></li>
                             <li><a href="<c:url value="/admin/users" />"><spring:message code="label.admin.users" /></a></li>
                             <li><a href="<c:url value="/admin/articles" />"><spring:message code="label.admin.articles" /></a></li>
@@ -114,7 +114,7 @@
                     </c:if>
                     <c:if test="${tag != 'user' and tag != 'admin'}">
                         <li><a class="go" href="<c:url value="/web/${tag}" />"><spring:message code="articles.type.home" /></a></li>
-                        <spring:eval expression="@configProperties.getProperty('sections.types')" var="types" />
+                        <spring:eval expression="@environment.getProperty('sections.types')" var="types" />
                         <c:forEach items="${types}" var="t">
                             <li><a class="go" href="<c:url value="/web/${tag}/${t}" />"><spring:message code="articles.type.${t}" /></a></li>
                         </c:forEach>

@@ -27,7 +27,7 @@
             <hr />
             <div class="header"><spring:message code="title.addcomment" /></div>
             <div class="form-container">
-                <form:form commandName="comment" id="form-comment">
+                <form:form modelAttribute="comment" id="form-comment">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">

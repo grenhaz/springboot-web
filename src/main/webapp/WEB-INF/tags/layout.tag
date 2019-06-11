@@ -26,7 +26,7 @@
         <script src="<c:url value="/resources/bootbox/bootbox.min.js" />"></script>
         <script src="<c:url value="/resources/js/site.js" />"></script>
         
-        <sec:authorize access="isAuthenticated() and hasRole('ROLE_ADMIN')">
+        <sec:authorize access="isAuthenticated() and hasRole('ADMIN')">
             <link href="<c:url value="/resources/datatables/datatables.min.css" />" rel="stylesheet" type="text/css" />
             <link href="<c:url value="/resources/datepicker/css/bootstrap-datepicker3.min.css" />" rel="stylesheet" type="text/css" />
             
@@ -76,9 +76,9 @@
                 <div class="wrap-container">
                     <jsp:doBody />
                 </div>
-                    
-                <ui:footer />
             </div>
+			
+            <ui:footer />
         </div>
     </body>
 </html>
