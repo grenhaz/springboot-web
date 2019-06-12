@@ -26,8 +26,12 @@ public interface CommentRepository extends CrudRepository<Comment, Integer>
      * @param pageable Instancia de la paginación.
      * @return Listado de comentarios.
      */
-    @Query("SELECT c FROM Comment c WHERE c.article.id = :idArticle")
+    @Query("SELECT c FROM Comment c WHERE c.article.id = :idArticle AND erased = false")
     List<Comment> findByArticle(@Param("idArticle") Integer idArticle, Pageable pageable);
+    @Query("SELECT COUNT(c) FROM Comment c WHERE c.article.id = :idArticle AND erased = false")
+    Long countByArticle(@Param("idArticle") Integer idArticle);
+    @Query("SELECT c FROM Comment c WHERE c.article.tags LIKE '%[' || :tag || ']%' AND erased = false")
+    List<Comment> findByTag(@Param("tag") String tag, Pageable pageable);
     /**
      * Devuelve los comentarios por usuario.
      * @param idUser Identificador del usuario.

@@ -25,14 +25,6 @@ public class ListPagination<T>
      * Registros.
      */
     private List records;
-    /**
-     * Tipo de registros.
-     */
-    private String type;
-    /**
-     * Etiqueta de los registros.
-     */
-    private String tag;
     
     /**
      * Devuelve la página actual.
@@ -92,21 +84,5 @@ public class ListPagination<T>
     public void setRecords(List<T> value)
     {
         records = value;
-    }
-    public String getType()
-    {
-        return type;
-    }
-    public void setType(String value)
-    {
-        type = value;
-    }
-    public String getTag()
-    {
-        return tag;
-    }
-    public void setTag(String value)
-    {
-        tag = value;
     }
 }

@@ -9,7 +9,7 @@
         <ui:article position="left" article="${article}" />
     </c:forEach>
 
-    <ui:pagination urlGet="${urlGet}" destination=".articles" pre="search_${articles.tag}" current="${articles.current}" pages="${articles.pages}" />
+    <ui:pagination urlGet="${urlGet}" destination=".articles" pre="search_${tag}" current="${articles.current}" pages="${articles.pages}" />
 </c:if>
 <c:if test="${empty articles.records}">
     <div class="articles-empty"><spring:message code="articles.empty" /></div>

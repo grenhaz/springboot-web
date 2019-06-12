@@ -53,8 +53,8 @@
                         "name": "user_role",
                         "render": function ( data, type, row, meta ) {
                             switch(data) {
-                                case "ROLE_ADMIN": return "<spring:message code="label.user.ROLE_ADMIN" />";
-                                case "ROLE_USER": return "<spring:message code="label.user.ROLE_USER" />";
+                                case "ADMIN": return "<spring:message code="label.user.ROLE_ADMIN" />";
+                                case "USER": return "<spring:message code="label.user.ROLE_USER" />";
                             }
                             return "";
                         }

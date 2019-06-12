@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
  * 
  * @author Heck
  */
-public interface ArticleRepository extends CrudRepository<Article, Integer>
+public interface ArticleRepository extends CrudRepository<Article, Integer>, ArticleExtensionRepository
 {
     /**
      * Devuelve el listado paginado de artículos.

@@ -85,7 +85,7 @@ public class WebController
     {
         return new ModelAndView("articles/index")
                 .addObject("tag",           tag)
-                .addObject("importants",    articleService.getArticlesImportants(tag))
+                .addObject("importants",    articleService.getArticlesImportants(tag, 3))
                 .addObject("guides",        articleService.getArticlesByType(tag, "guide", 3))
                 .addObject("reviews",       articleService.getArticlesByType(tag, "review", 4))
                 .addObject("specials",      articleService.getArticlesByType(tag, "special", 3))
@@ -120,7 +120,7 @@ public class WebController
     {
         return new ModelAndView("articles/articles")
                 .addObject("tag",           tag)
-                .addObject("importants",    articleService.getArticlesImportants(tag, type))
+                .addObject("importants",    articleService.getArticlesImportants(tag, type, 3))
                 .addObject("type",          type);
     }
     /**
@@ -269,6 +269,7 @@ public class WebController
     {
         return new ModelAndView("articles/articles.ajax")
                 .addObject("tag",       tag)
+                .addObject("type",      type)
                 .addObject("menu",      menu)
                 .addObject("articles",  articleService.getArticlesAll(1, ARTICLES_PER_PAGE, tag, type));
     }
@@ -289,6 +290,7 @@ public class WebController
     {
         return new ModelAndView("articles/articles.ajax")
                 .addObject("tag",       tag)
+                .addObject("type",      type)
                 .addObject("menu",      menu)
                 .addObject("articles",  articleService.getArticlesAll(page, ARTICLES_PER_PAGE, tag, type));
     }

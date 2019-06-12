@@ -21,7 +21,7 @@ public interface ArticleService
      * @param req Instancia de la petición.
      * @return Listado de artículos.
      */
-    public DataTablesResponse<Article> getArticlesLite(DataTablesRequest req);
+    public DataTablesResponse<Article> getArticles(DataTablesRequest req);
     /**
      * DataTables: Devuelve el listado de comentarios en función a los parámetros
      * indicados por la petición DataTables.
@@ -29,7 +29,7 @@ public interface ArticleService
      * @param req Instancia de la petición.
      * @return Listado de comentarios.
      */
-    public DataTablesResponse<Comment> getCommentsLite(Integer id, DataTablesRequest req);
+    public DataTablesResponse<Comment> getComments(Integer id, DataTablesRequest req);
     /**
      * Devuelve un listado de artículos.
      * @param page Página.
@@ -66,16 +66,18 @@ public interface ArticleService
     /**
      * Devuelve un listado de artículos marcados como imporatantes.
      * @param tag Etiqueta de búsqueda.
+     * @param count Número de artículos.
      * @return Listado de artículos.
      */
-    public List<Article> getArticlesImportants(String tag);
+    public List<Article> getArticlesImportants(String tag, int count);
     /**
      * Devuelve un listado de artículos marcados como imporatantes.
      * @param tag Etiqueta de búsqueda.
      * @param type Tipo de artículo
+     * @param count Número de artículos.
      * @return Listado de artículos.
      */
-    public List<Article> getArticlesImportants(String tag, String type);
+    public List<Article> getArticlesImportants(String tag, String type, int count);
     /**
      * Devuelve un listado de artículos por tipo.
      * @param tag Etiqueta.

@@ -133,7 +133,7 @@ public class AdminController
     @GetMapping("/ajax/articles")
     public @ResponseBody DataTablesResponse<Article> actionArticlesAjax(HttpServletRequest request)
     {
-        return articleService.getArticlesLite(new DataTablesRequest(request));
+        return articleService.getArticles(new DataTablesRequest(request));
     }
     /**
      * Listado de artículos para el DataTables.
@@ -146,7 +146,7 @@ public class AdminController
             @PathVariable("id") int id,
             HttpServletRequest request)
     {
-        return articleService.getCommentsLite(id, new DataTablesRequest(request));
+        return articleService.getComments(id, new DataTablesRequest(request));
     }
     /**
      * Formulario de un usuario.

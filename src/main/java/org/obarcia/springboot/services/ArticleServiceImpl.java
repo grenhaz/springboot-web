@@ -1,7 +1,10 @@
 package org.obarcia.springboot.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.HibernateException;
+import org.obarcia.springboot.components.datatables.DataTablesColumn;
 import org.obarcia.springboot.components.datatables.DataTablesOrder;
 import org.obarcia.springboot.components.datatables.DataTablesResponse;
 import org.obarcia.springboot.components.datatables.DataTablesRequest;
@@ -39,9 +42,13 @@ public class ArticleServiceImpl implements ArticleService
     
     @Override
     @Transactional(readOnly = true)
-    public DataTablesResponse<Article> getArticlesLite(DataTablesRequest req)
+    public DataTablesResponse<Article> getArticles(DataTablesRequest req)
     {
-        // TODO: Aplciar filtros
+        // Aplicar filtros
+        Map<String, Object> filters = new HashMap<>();
+        for (Map.Entry<String, DataTablesColumn> entry : req.getColumns().entrySet()) {
+            filters.put(entry.getKey(), entry.getValue().getSearch());
+        }
         
         // Orden
         Sort sort = Sort.unsorted();
@@ -54,20 +61,20 @@ public class ArticleServiceImpl implements ArticleService
         }
         
         // Paginación
-        Pageable pagination = PageRequest.of(req.getPage(), req.getLength(), sort);
+        Pageable pagination = PageRequest.of(req.getPage() - 1, req.getLength(), sort);
         
         // Obtener los registros
-        List<Article> records = articleRepository.findAll(pagination);
+        List<Article> records = articleRepository.findByFilter(filters, pagination);
         DataTablesResponse<Article> response = new DataTablesResponse<>();
         response.setDraw(req.getDraw());
         response.setData(records);
         response.setRecordsFiltered((long)records.size());
-        response.setRecordsTotal(articleRepository.count());
+        response.setRecordsTotal(articleRepository.countByFilter(filters));
         return response;
     }
     @Override
     @Transactional(readOnly = true)
-    public DataTablesResponse<Comment> getCommentsLite(Integer id, DataTablesRequest req)
+    public DataTablesResponse<Comment> getComments(Integer id, DataTablesRequest req)
     {
         //TODO: return commentLiteRepository.getComments(id, req);
         return null;
@@ -76,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesAll(int page, int perPage)
     {
-        List<Article> slist = articleRepository.findAll(PageRequest.of(page, perPage, Sort.by("id")));
+        List<Article> slist = articleRepository.findAll(PageRequest.of(page - 1, perPage, Sort.by("id")));
         
         return createListPagination(page, perPage, articleRepository.count(), slist);
     }
@@ -84,39 +91,36 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesAll(int page, int perPage, String type)
     {
-        List<Article> slist = articleRepository.findByType(type, PageRequest.of(page, perPage, Sort.by("id")));
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("type", type);
         
-        return createListPagination(page, perPage, articleRepository.countByType(type), slist);
+        List<Article> slist = articleRepository.findByFilter(filters, PageRequest.of(page - 1, perPage, Sort.by("publish").descending()));
+        
+        return createListPagination(page, perPage, articleRepository.countByFilter(filters), slist);
     }
     @Override
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesAll(int page, int perPage, String tag, String type)
     {
-        /*TODO: ListPagination<ArticleSimple> list = articleSimpleRepository.getArticles(page, perPage, tag, type);
-        // Obtener el contador de comentarios
-        if (list.getRecords() != null) {
-            for (ArticleSimple a: list.getRecords()) {
-                a.getCommentsCount();
-            }
-        }
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("tag", tag);
+        filters.put("type", type);
         
-        return list;*/
-        return null;
+        List<Article> slist = articleRepository.findByFilter(filters, PageRequest.of(page - 1, perPage, Sort.by("publish").descending()));
+        
+        return createListPagination(page, perPage, articleRepository.countByFilter(filters), slist);
     }
     @Override
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesSearch(int page, int perPage, String tag, String search)
     {
-        /*TODO: ListPagination<ArticleSimple> list = articleSimpleRepository.getArticlesSearch(page, perPage, tag, search);
-        // Obtener el contador de comentarios
-        if (list.getRecords() != null) {
-            for (ArticleSimple a: list.getRecords()) {
-                a.getCommentsCount();
-            }
-        }
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("tag", tag);
+        filters.put("all", search);
         
-        return list;*/
-        return null;
+        List<Article> slist = articleRepository.findByFilter(filters, PageRequest.of(page - 1, perPage, Sort.by("publish").descending()));
+        
+        return createListPagination(page, perPage, articleRepository.countByFilter(filters), slist);
     }
     private ListPagination createListPagination(int page, int perPage, long total, List<Article> slist)
     {
@@ -130,55 +134,68 @@ public class ArticleServiceImpl implements ArticleService
         // Listado paginado
         ListPagination list = new ListPagination();
         list.setRecords(slist);
-        list.setOffset(page * perPage);
+        list.setOffset((page - 1) * perPage);
         list.setLimit(perPage);
         list.setTotal(total);
         return list;
     }
     @Override
     @Transactional(readOnly = true)
-    public List<Article> getArticlesImportants(String tag)
+    public List<Article> getArticlesImportants(String tag, int count)
     {
-        /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticlesImportant(tag, null, 3);
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("tag", tag);
+        filters.put("important", true);
+        
+        List<Article> slist = articleRepository.findByFilter(filters, PageRequest.of(0, count, Sort.by("publish").descending()));
+        
         // Obtener el contador de comentarios
-        if (list != null) {
-            for (ArticleSimple a: list) {
+        if (slist != null) {
+            for (Article a: slist) {
                 a.getCommentsCount();
             }
         }
         
-        return list;*/
-        return null;
+        return slist;
     }
     @Override
     @Transactional(readOnly = true)
-    public List<Article> getArticlesImportants(String tag, String type)
+    public List<Article> getArticlesImportants(String tag, String type, int count)
     {
-        /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticlesImportant(tag, type, 3);
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("tag", tag);
+        filters.put("type", type);
+        filters.put("important", true);
+        
+        List<Article> slist = articleRepository.findByFilter(filters, PageRequest.of(0, count, Sort.by("publish").descending()));
+        
         // Obtener el contador de comentarios
-        if (list != null) {
-            for (ArticleSimple a: list) {
+        if (slist != null) {
+            for (Article a: slist) {
                 a.getCommentsCount();
             }
         }
         
-        return list;*/
-        return null;
+        return slist;
     }
     @Override
     @Transactional(readOnly = true)
     public List<Article> getArticlesByType(String tag, String type, int count)
     {
-        /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticles(0, count, tag, type).getRecords();
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("tag", tag);
+        filters.put("type", type);
+        
+        List<Article> slist = articleRepository.findByFilter(filters, PageRequest.of(0, count, Sort.by("publish").descending()));
+        
         // Obtener el contador de comentarios
-        if (list != null) {
-            for (ArticleSimple a: list) {
+        if (slist != null) {
+            for (Article a: slist) {
                 a.getCommentsCount();
             }
         }
         
-        return list;*/
-        return null;
+        return slist;
     }
     @Override
     @Transactional(readOnly = true)
@@ -199,15 +216,22 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public ListPagination<Comment> getComments(int id, int page, int perPage)
     {
-        //TODO: return commentRepository.findByArticle(id, PageRequest.of(page, perPage, Sort.by("publish").descending()));
-        return null;
+        ListPagination list = new ListPagination();
+        list.setRecords(commentRepository.findByArticle(id, PageRequest.of(page - 1, perPage, Sort.by("publish").descending())));
+        list.setOffset((page - 1) * perPage);
+        list.setLimit(perPage);
+        list.setTotal(commentRepository.countByArticle(id));
+        return list;
     }
     @Override
     @Transactional(readOnly = true)
     public List<Comment> getLastComments(String tag, int count)
     {
-        //TODO: return commentRepository.getLastComments(tag, count);
-        return null;
+        // TODO: No devuelve nada
+        List<Comment> list = commentRepository.findByTag(tag.toUpperCase(), PageRequest.of(0, count, Sort.by("publish").descending()));
+        System.out.println(tag + " count: " + list.size());
+        
+        return list;
     }
     @Override
     @Transactional(readOnly = true)
