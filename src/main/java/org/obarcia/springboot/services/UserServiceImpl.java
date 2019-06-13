@@ -1,12 +1,20 @@
 package org.obarcia.springboot.services;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.hibernate.HibernateException;
+import org.obarcia.springboot.components.datatables.DataTablesColumn;
+import org.obarcia.springboot.components.datatables.DataTablesOrder;
 import org.obarcia.springboot.components.datatables.DataTablesRequest;
 import org.obarcia.springboot.components.datatables.DataTablesResponse;
 import org.obarcia.springboot.exceptions.SaveException;
 import org.obarcia.springboot.models.entity.user.User;
 import org.obarcia.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +34,38 @@ public class UserServiceImpl implements UserService
     
     @Override
     @Transactional(readOnly = true)
-    public DataTablesResponse<User> getUsersLite(DataTablesRequest req)
+    public DataTablesResponse<User> getUsers(DataTablesRequest req)
     {
-        // TODO: return userLiteRepository.getUsers(req);
-        return null;
+        // Aplicar filtros
+        Map<String, Object> filters = new HashMap<>();
+        for (Map.Entry<String, DataTablesColumn> entry : req.getColumns().entrySet()) {
+            filters.put(entry.getKey(), entry.getValue().getSearch());
+        }
+        if (req.getSearch() != null && !req.getSearch().isEmpty()) {
+            filters.put("all", req.getSearch());
+        }
+        
+        // Orden
+        Sort sort = Sort.unsorted();
+        for (DataTablesOrder order: req.getOrders()) {
+            if (order.getDir() == DataTablesOrder.ORDER_ASC) {
+                sort.and(Sort.by(order.getData()).ascending());
+            } else {
+                sort.and(Sort.by(order.getData()).descending());
+            }
+        }
+        
+        // Paginación
+        Pageable pagination = PageRequest.of(req.getPage(), req.getLength(), sort);
+        
+        // Obtener los registros
+        List<User> records = userRepository.findByFilter(filters, pagination);
+        DataTablesResponse<User> response = new DataTablesResponse<>();
+        response.setDraw(req.getDraw());
+        response.setData(records);
+        response.setRecordsFiltered(userRepository.countByFilter(filters));
+        response.setRecordsTotal(userRepository.count());
+        return response;
     }
     @Override
     @Transactional(readOnly = true)

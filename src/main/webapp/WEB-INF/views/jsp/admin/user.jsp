@@ -6,7 +6,7 @@
 <ui:layout title="${title}" tag="admin" flash="${flash}">
     <div class="section">
         <div class="header"><spring:message code="label.admin.user" />: <c:out value="${id}" /></div>
-            <form:form modelAttribute="form" method="POST">
+            <form:form modelAttribute="form" method="POST" acceptCharset="UTF-8">
                 <form:hidden path="id" />
                 <div class="row">
                     <div class="col-sm-6">

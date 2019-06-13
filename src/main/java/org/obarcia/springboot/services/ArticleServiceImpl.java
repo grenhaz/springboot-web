@@ -49,6 +49,9 @@ public class ArticleServiceImpl implements ArticleService
         for (Map.Entry<String, DataTablesColumn> entry : req.getColumns().entrySet()) {
             filters.put(entry.getKey(), entry.getValue().getSearch());
         }
+        if (req.getSearch() != null && !req.getSearch().isEmpty()) {
+            filters.put("all", req.getSearch());
+        }
         
         // Orden
         Sort sort = Sort.unsorted();
@@ -61,23 +64,51 @@ public class ArticleServiceImpl implements ArticleService
         }
         
         // Paginación
-        Pageable pagination = PageRequest.of(req.getPage() - 1, req.getLength(), sort);
+        Pageable pagination = PageRequest.of(req.getPage(), req.getLength(), sort);
         
         // Obtener los registros
         List<Article> records = articleRepository.findByFilter(filters, pagination);
         DataTablesResponse<Article> response = new DataTablesResponse<>();
         response.setDraw(req.getDraw());
         response.setData(records);
-        response.setRecordsFiltered((long)records.size());
-        response.setRecordsTotal(articleRepository.countByFilter(filters));
+        response.setRecordsFiltered(articleRepository.countByFilter(filters));
+        response.setRecordsTotal(articleRepository.count());
         return response;
     }
     @Override
     @Transactional(readOnly = true)
     public DataTablesResponse<Comment> getComments(Integer id, DataTablesRequest req)
     {
-        //TODO: return commentLiteRepository.getComments(id, req);
-        return null;
+        // Aplicar filtros
+        Map<String, Object> filters = new HashMap<>();
+        for (Map.Entry<String, DataTablesColumn> entry : req.getColumns().entrySet()) {
+            filters.put(entry.getKey(), entry.getValue().getSearch());
+        }
+        if (req.getSearch() != null && !req.getSearch().isEmpty()) {
+            filters.put("all", req.getSearch());
+        }
+        
+        // Orden
+        Sort sort = Sort.unsorted();
+        for (DataTablesOrder order: req.getOrders()) {
+            if (order.getDir() == DataTablesOrder.ORDER_ASC) {
+                sort.and(Sort.by(order.getData()).ascending());
+            } else {
+                sort.and(Sort.by(order.getData()).descending());
+            }
+        }
+        
+        // Paginación
+        Pageable pagination = PageRequest.of(req.getPage(), req.getLength(), sort);
+        
+        // Obtener los registros
+        List<Comment> records = commentRepository.findByFilter(filters, pagination);
+        DataTablesResponse<Comment> response = new DataTablesResponse<>();
+        response.setDraw(req.getDraw());
+        response.setData(records);
+        response.setRecordsFiltered(commentRepository.countByFilter(filters));
+        response.setRecordsTotal(commentRepository.count());
+        return response;
     }
     @Override
     @Transactional(readOnly = true)
@@ -92,6 +123,7 @@ public class ArticleServiceImpl implements ArticleService
     public ListPagination<Article> getArticlesAll(int page, int perPage, String type)
     {
         Map<String, Object> filters = new HashMap<>();
+        filters.put("active", Boolean.TRUE);
         filters.put("type", type);
         
         List<Article> slist = articleRepository.findByFilter(filters, PageRequest.of(page - 1, perPage, Sort.by("publish").descending()));
@@ -103,6 +135,7 @@ public class ArticleServiceImpl implements ArticleService
     public ListPagination<Article> getArticlesAll(int page, int perPage, String tag, String type)
     {
         Map<String, Object> filters = new HashMap<>();
+        filters.put("active", Boolean.TRUE);
         filters.put("tag", tag);
         filters.put("type", type);
         
@@ -115,6 +148,7 @@ public class ArticleServiceImpl implements ArticleService
     public ListPagination<Article> getArticlesSearch(int page, int perPage, String tag, String search)
     {
         Map<String, Object> filters = new HashMap<>();
+        filters.put("active", Boolean.TRUE);
         filters.put("tag", tag);
         filters.put("all", search);
         
@@ -144,6 +178,7 @@ public class ArticleServiceImpl implements ArticleService
     public List<Article> getArticlesImportants(String tag, int count)
     {
         Map<String, Object> filters = new HashMap<>();
+        filters.put("active", Boolean.TRUE);
         filters.put("tag", tag);
         filters.put("important", true);
         
@@ -163,6 +198,7 @@ public class ArticleServiceImpl implements ArticleService
     public List<Article> getArticlesImportants(String tag, String type, int count)
     {
         Map<String, Object> filters = new HashMap<>();
+        filters.put("active", Boolean.TRUE);
         filters.put("tag", tag);
         filters.put("type", type);
         filters.put("important", true);
@@ -183,6 +219,7 @@ public class ArticleServiceImpl implements ArticleService
     public List<Article> getArticlesByType(String tag, String type, int count)
     {
         Map<String, Object> filters = new HashMap<>();
+        filters.put("active", Boolean.TRUE);
         filters.put("tag", tag);
         filters.put("type", type);
         
@@ -201,15 +238,8 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public List<Article> getArticlesMoreComments(String tag, int count)
     {
-        /*TODO: List<ArticleSimple> list = articleSimpleRepository.getArticlesMoreComments(tag, count);
-        // Obtener el contador de comentarios
-        if (list != null) {
-            for (ArticleSimple a: list) {
-                a.getCommentsCount();
-            }
-        }
-        
-        return list;*/
+        // TODO: Obtener los artículos más vistos / comentados.
+        // BUG: https://hibernate.atlassian.net/browse/HHH-1615
         return null;
     }
     @Override
@@ -227,9 +257,11 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public List<Comment> getLastComments(String tag, int count)
     {
-        // TODO: No devuelve nada
-        List<Comment> list = commentRepository.findByTag(tag.toUpperCase(), PageRequest.of(0, count, Sort.by("publish").descending()));
-        System.out.println(tag + " count: " + list.size());
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("active", Boolean.TRUE);
+        filters.put("tag", tag);
+        
+        List<Comment> list = commentRepository.findByFilter(filters, PageRequest.of(0, count, Sort.by("publish").descending()));
         
         return list;
     }

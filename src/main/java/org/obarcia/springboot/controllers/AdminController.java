@@ -14,7 +14,7 @@ import org.obarcia.springboot.models.entity.article.Article;
 import org.obarcia.springboot.models.forms.article.ArticleForm;
 import org.obarcia.springboot.models.entity.article.Comment;
 import org.obarcia.springboot.models.entity.user.User;
-import org.obarcia.springboot.models.entity.user.UserForm;
+import org.obarcia.springboot.models.forms.user.UserForm;
 import org.obarcia.springboot.services.ArticleService;
 import org.obarcia.springboot.services.BrowserService;
 import org.obarcia.springboot.services.MailService;
@@ -102,7 +102,7 @@ public class AdminController
     @GetMapping("/ajax/users")
     public @ResponseBody DataTablesResponse<User> actionUsersAjax(HttpServletRequest request)
     {
-        return userService.getUsersLite(new DataTablesRequest(request));
+        return userService.getUsers(new DataTablesRequest(request));
     }
     /**
      * Listado de artículos.
@@ -142,7 +142,7 @@ public class AdminController
      * @return JSON resultante.
      */
     @GetMapping("/ajax/comments/{id}")
-    public @ResponseBody DataTablesResponse<Comment> actionArticlesAjax(
+    public @ResponseBody DataTablesResponse<Comment> actionCommentsAjax(
             @PathVariable("id") int id,
             HttpServletRequest request)
     {
@@ -355,6 +355,7 @@ public class AdminController
      * @throws SaveException
      * @throws ArticleNotFoundException
      */
+    
     @PostMapping("/article/{id}")
     public ModelAndView actionArticle(
             @PathVariable("id") int id,
@@ -374,6 +375,7 @@ public class AdminController
             }
             if (article != null) {
                 // Rellenar el articulo
+                article.setType(form.getType());
                 article.setTitle(form.getTitle());
                 article.setDescription(form.getDescription());
                 article.setImage(form.getImage());

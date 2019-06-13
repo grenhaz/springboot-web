@@ -6,7 +6,7 @@
 <ui:layout title="${title}" tag="admin" flash="${flash}">
     <div class="section">
         <div class="header"><spring:message code="label.admin.article" />: <c:out value="${form.id}" /></div>
-        <form:form modelAttribute="form" method="POST">
+        <form:form modelAttribute="form" method="POST" acceptCharset="UTF-8">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#tab-data" aria-controls="tab-data" role="tab" data-toggle="tab"><spring:message code="label.admin.data" /></a></li>
                 <li role="presentation"><a href="#tab-content" aria-controls="tab-content" role="tab" data-toggle="tab"><spring:message code="label.content" /></a></li>
@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <form:label path="type"><spring:message code="label.type" /></form:label>
                                     <form:select class="form-control" path="type">
-                                        <spring:eval expression="@configProperties.getProperty('sections.types')" var="types" />
+                                        <spring:eval expression="@environment.getProperty('sections.types')" var="types" />
                                         <c:forEach items="${types}" var="t">
                                             <form:option value="${t}"><spring:message code="article.type.${t}" /></form:option>
                                         </c:forEach>
@@ -78,7 +78,7 @@
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <form:label path="tags"><spring:message code="label.tags" /></form:label>
-                                    <spring:eval expression="@configProperties.getProperty('sections.tags')" var="tags" />
+                                    <spring:eval expression="@environment.getProperty('sections.tags')" var="tags" />
                                     <div class="row">
                                         <c:forEach items="${tags}" var="t">
                                             <div class="col-xs-6 col-sm-2"><form:checkbox path="tagsCheckbox" value="${t}" />&nbsp;<c:out value="${t}" /></div>
@@ -223,7 +223,7 @@
                 });
                 
                 $('#records').on('click', '.btn-active', function(e) {
-                    $activate(this, '<c:url value="/admin/article/${form.id}" />/erase', {
+                    $activate(this, '<c:url value="/admin/article/${id}" />/erase', {
                         '<c:out value="${_csrf.parameterName}" />': '<c:out value="${_csrf.token}" />',
                         'comment': $(this).data('id')
                     }, $(this).data('value'), 'fa-ban text-danger', 'fa-check-circle-o text-success');

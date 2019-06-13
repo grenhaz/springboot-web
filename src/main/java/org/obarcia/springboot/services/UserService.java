@@ -17,7 +17,7 @@ public interface UserService
      * @param req Instancia de la petición.
      * @return Listado de usuarios.
      */
-    public DataTablesResponse<User> getUsersLite(DataTablesRequest req);
+    public DataTablesResponse<User> getUsers(DataTablesRequest req);
     /**
      * Busca un usuario por su identificador.
      * @param id Identificador.

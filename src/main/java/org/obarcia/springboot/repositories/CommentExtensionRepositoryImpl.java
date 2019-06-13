@@ -8,30 +8,30 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.obarcia.springboot.models.entity.article.Article;
+import org.obarcia.springboot.models.entity.article.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementación del repositorio de artículos extendido.
+ * Implementación del repositorio de comentarios extendido.
  * 
  * @author Heck
  */
 @Repository
-public class ArticleExtensionRepositoryImpl implements ArticleExtensionRepository
+public class CommentExtensionRepositoryImpl implements CommentExtensionRepository
 {
     @Autowired
     EntityManager em;
     
     @Override
-    public List<Article> findByFilter(Map<String, Object> filters, Pageable pageable)
+    public List<Comment> findByFilter(Map<String, Object> filters, Pageable pageable)
     {
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Article> cq = builder.createQuery(Article.class);
+        CriteriaQuery<Comment> cq = builder.createQuery(Comment.class);
 
-        Root<Article> root = cq.from(Article.class);
+        Root<Comment> root = cq.from(Comment.class);
         
         applyFilters(cq, root, builder, filters);
         
@@ -45,14 +45,14 @@ public class ArticleExtensionRepositoryImpl implements ArticleExtensionRepositor
     {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = builder.createQuery(Long.class);
-        Root<Article> root = cq.from(Article.class);
+        Root<Comment> root = cq.from(Comment.class);
         cq.select(builder.count(root));
         
         applyFilters(cq, root, builder, filters);
         
         return em.createQuery(cq).getSingleResult();
     }
-    private void applyFilters(CriteriaQuery cq, Root<Article> root, CriteriaBuilder builder, Map<String, Object> filters)
+    private void applyFilters(CriteriaQuery cq, Root<Comment> root, CriteriaBuilder builder, Map<String, Object> filters)
     {
         List<Predicate> predicates = new ArrayList<>();
 
@@ -63,24 +63,11 @@ public class ArticleExtensionRepositoryImpl implements ArticleExtensionRepositor
                         case "id":
                             predicates.add(builder.equal(root.get("id"), Integer.parseInt(entry.getValue().toString())));
                             break;
-                        case "title":
-                            predicates.add(builder.like(builder.lower(root.<String>get("title")), "%" + entry.getValue().toString().toLowerCase() + "%"));
+                        case "content":
+                            predicates.add(builder.like(builder.lower(root.<String>get("content")), "%" + entry.getValue().toString().toLowerCase() + "%"));
                             break;
-                        case "description":
-                            predicates.add(builder.like(builder.lower(root.<String>get("description")), "%" + entry.getValue().toString().toLowerCase() + "%"));
-                            break;
-                        case "type":
-                            if (!entry.getValue().toString().equals("all")) {
-                                predicates.add(builder.equal(root.get("type"), entry.getValue()));
-                            }
-                            break;
-                        case "tag":
-                            if (!entry.getValue().toString().equals("games")) {
-                                predicates.add(builder.like(root.<String>get("tags"), "%[" + entry.getValue().toString().toUpperCase() + "]%"));
-                            }
-                            break;
-                        case "active":
-                            predicates.add(builder.equal(root.get("active"), Boolean.valueOf(entry.getValue().toString())));
+                        case "erased":
+                            predicates.add(builder.equal(root.get("erased"), Boolean.valueOf(entry.getValue().toString())));
                             break;
                         case "important":
                             predicates.add(builder.equal(root.get("important"), Boolean.valueOf(entry.getValue().toString())));
@@ -88,13 +75,13 @@ public class ArticleExtensionRepositoryImpl implements ArticleExtensionRepositor
                         case "publish":
                             predicates.add(builder.equal(root.get("publish"), entry.getValue()));
                             break;
+                        case "tag":
+                            if (!entry.getValue().toString().equals("games")) {
+                                predicates.add(builder.like(root.get("article").<String>get("tags"), "%[" + entry.getValue().toString().toUpperCase() + "]%"));
+                            }
+                            break;
                         case "all":
-                            predicates.add(
-                                builder.or(
-                                    builder.like(root.<String>get("title"), "%" + entry.getValue() + "%"),
-                                    builder.like(root.<String>get("description"), "%" + entry.getValue() + "%")
-                                )
-                            );
+                            predicates.add(builder.like(root.<String>get("content"), "%" + entry.getValue() + "%"));
                             break;
                     }
                 }

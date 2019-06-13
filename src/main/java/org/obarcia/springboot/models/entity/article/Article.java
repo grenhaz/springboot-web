@@ -1,5 +1,6 @@
 package org.obarcia.springboot.models.entity.article;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -95,6 +96,7 @@ public class Article
      */
     @NotEmpty
     @Size(max = 9000)
+    @JsonIgnore
     @Column(name = "content")
     private String content;
     /**
@@ -103,6 +105,7 @@ public class Article
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.EXTRA)
+    @JsonIgnore
     private final Set<Comment> comments = new HashSet<>();
     
     /**

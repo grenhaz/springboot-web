@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
  * 
  * @author Heck
  */
-public interface UserRepository extends CrudRepository<User, Integer>
+public interface UserRepository extends CrudRepository<User, Integer>, UserExtensionRepository
 {
     /**
      * Devuelve un usuario por su UKEY.
@@ -31,6 +31,6 @@ public interface UserRepository extends CrudRepository<User, Integer>
      * @param email e-mail a buscar.
      * @return Instancia del usuario.
      */
-    @Query("SELECT u FROM User u WHERE email = :email")
+    @Query("SELECT u FROM User u WHERE email = :email AND active = true")
     User findByEmail(@Param("email") String email);
 }
