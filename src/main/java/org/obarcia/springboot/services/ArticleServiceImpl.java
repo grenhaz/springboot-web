@@ -3,6 +3,7 @@ package org.obarcia.springboot.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.hibernate.HibernateException;
 import org.obarcia.springboot.components.datatables.DataTablesColumn;
 import org.obarcia.springboot.components.datatables.DataTablesOrder;
@@ -275,13 +276,23 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public Article getArticle(int id)
     {
-        return articleRepository.findById(id).get();
+        Optional<Article> article = articleRepository.findById(id);
+        if (article.isPresent()) {
+            return article.get();
+        }
+        
+        return null;
     }
     @Override
     @Transactional(readOnly = true)
     public Comment getComment(int id)
     {
-        return commentRepository.findById(id).get();
+        Optional<Comment> comment = commentRepository.findById(id);
+        if (comment.isPresent()) {
+            return comment.get();
+        }
+        
+        return null;
     }
     @Override
     @Transactional(readOnly = true)

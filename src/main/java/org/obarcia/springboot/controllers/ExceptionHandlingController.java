@@ -55,7 +55,7 @@ public class ExceptionHandlingController
      * @return Vista resultante.
      */
     @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(value=HttpStatus.NOT_FOUND)
+    @ResponseStatus(value=HttpStatus.UNAUTHORIZED)
     public ModelAndView actionAccessDenied(Exception ex)
     {
         return new ModelAndView("error")
