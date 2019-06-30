@@ -3,6 +3,7 @@ package org.obarcia.springboot.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.hibernate.HibernateException;
 import org.obarcia.springboot.components.datatables.DataTablesColumn;
 import org.obarcia.springboot.components.datatables.DataTablesOrder;
@@ -71,7 +72,12 @@ public class UserServiceImpl implements UserService
     @Transactional(readOnly = true)
     public User getUserById(int id)
     {
-        return userRepository.findById(id).get();
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        
+        return null;
     }
     @Override
     @Transactional(readOnly = true)

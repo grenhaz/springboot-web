@@ -321,14 +321,17 @@ public class UserController
         ProfileForm form = new ProfileForm();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
-            AccountDetails account = ((AccountDetails)auth.getPrincipal());
-            form.setId(account.getId());
-            form.setNickname(account.getNickname());
-            form.setAvatar(account.getAvatar());
-        
-            return new ModelAndView("user/profile")
-                .addObject("form", form)
-                .addObject("comments", articleService.getLastCommentsByUser(form.getId(), 8));
+            String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+            User account = userService.getUserByEmail(username);
+            if (account != null) {
+                form.setId(account.getId());
+                form.setNickname(account.getNickname());
+                form.setAvatar(account.getAvatar());
+
+                return new ModelAndView("user/profile")
+                    .addObject("form", form)
+                    .addObject("comments", articleService.getLastCommentsByUser(form.getId(), 8));
+            }
         }
         
         return new ModelAndView("redirect:/");
@@ -353,8 +356,9 @@ public class UserController
         if (!result.hasErrors()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null){
-                AccountDetails account = ((AccountDetails)auth.getPrincipal());
-                if (account.getId().equals(form.getId())) {
+                String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+                User account = userService.getUserByEmail(username);
+                if (account != null && account.getId().equals(form.getId())) {
                     account.setNickname(form.getNickname());
                     account.setAvatar(form.getAvatar());
                     User user = userService.getUserById(account.getId());
@@ -389,11 +393,14 @@ public class UserController
         PasswordForm form = new PasswordForm();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
-            AccountDetails account = ((AccountDetails)auth.getPrincipal());
-            form.setId(account.getId());
-        
-            return new ModelAndView("user/password")
-                .addObject("form", form);
+            String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+            User account = userService.getUserByEmail(username);
+            if (account != null) {
+                form.setId(account.getId());
+
+                return new ModelAndView("user/password")
+                    .addObject("form", form);
+            }
         }
         
         return new ModelAndView("redirect:/");
@@ -418,8 +425,9 @@ public class UserController
         if (!result.hasErrors()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null){
-                AccountDetails account = ((AccountDetails)auth.getPrincipal());
-                if (account.getId().equals(form.getId())) {
+                String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+                User account = userService.getUserByEmail(username);
+                if (account != null && account.getId().equals(form.getId())) {
                     User user = userService.getUserById(account.getId());
                     if (user != null) {
                         user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
