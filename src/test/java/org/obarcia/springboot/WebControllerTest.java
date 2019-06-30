@@ -37,10 +37,7 @@ import org.obarcia.springboot.models.forms.article.CommentForm;
 import org.springframework.http.MediaType;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import org.springframework.mock.web.MockHttpServletRequest;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -50,10 +47,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class WebControllerTest
 {
-    class FiltersMock
-    {
-        
-    }
     /**
      * Control de los E-mail.
      */
@@ -264,9 +257,6 @@ public class WebControllerTest
     @WithMockUser(username = "admin@test.com", roles = { "USER" })
     public void accessArticleAddCommentOk() throws Throwable
     {
-        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
-        CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
-
         CommentForm form = new CommentForm();
         form.setContent("Text Comment");
         
@@ -274,9 +264,10 @@ public class WebControllerTest
             .perform(post("/article/1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .with(csrf())
-                .sessionAttr("form", form)
+                .param("content", "Text Comment")
             )
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andExpect(model().hasNoErrors());
     }
     /**
      * Prueba de escribir un comentario (Ok)
@@ -287,8 +278,7 @@ public class WebControllerTest
     {
         mvc
             .perform(post("/article/1")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .sessionAttr("form", new CommentForm()))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
             .andExpect(status().isForbidden());
     }
     /**
@@ -301,8 +291,7 @@ public class WebControllerTest
         mvc
             .perform(post("/article/1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .with(csrf())
-                .sessionAttr("form", new CommentForm()))
+                .with(csrf()))
             .andExpect(status().isUnauthorized());
     }
     /**
@@ -316,8 +305,7 @@ public class WebControllerTest
         mvc
             .perform(post("/article/2")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .with(csrf())
-                .sessionAttr("form", new CommentForm()))
+                .with(csrf()))
             .andExpect(status().isNotFound());
     }
     /**

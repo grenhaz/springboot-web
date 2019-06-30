@@ -164,8 +164,8 @@ public class WebController
             // Si no hay errores
             if (!result.hasErrors()) {
                 // Obtener el usuario conectado
-                int userId = ((AccountDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-                User user = userService.getUserById(userId);
+                String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+                User user = userService.getUserByEmail(username);
                 if (user != null) {
                     // Crear el comentario
                     Comment comment = new Comment();
