@@ -61,7 +61,8 @@ public class DevConfig
             createArticle("new", "game9.jpg", "Habrá cambios en la cúpula directiva de Sony Interactive Entertainment", "Se efectuarán a partir del próximo 1 de abril y están implicados distintos empresarios.", content, "[PS4]", null, false, 9);
             createArticle("special", "game10.jpg", "Reportaje: Juegos olvidados", "", content, "[PC]", null, false, 4);
             //createArticle(12, "new", "game.jpg", "qwe", "qwe", content, "[PC]", null, true, 3);
-        } catch (SaveException ex) {}
+        } catch (SaveException ex) {
+        }
     }
     /**
      * Crear / Actualizar un artículo.
@@ -117,11 +118,11 @@ public class DevConfig
                 userService.getUserByEmail("yo3@test.com"),
                 userService.getUserByEmail("yo4@test.com"),
             };
-            for (int i = 0; i < comments; i ++) {
+            for (int i = 0; i < comments; i++) {
                 Comment c = new Comment();
                 c.setArticle(article);
-                c.setUser(users[(int)(Math.random() * 5)]);
-                c.setContent(messages[(int)(Math.random() * 3)]);
+                c.setUser(users[(int) (Math.random() * 5)]);
+                c.setContent(messages[(int) (Math.random() * 3)]);
                 c.setPublish(new Date());
                 c.setErased(false);
                 articleService.save(c);

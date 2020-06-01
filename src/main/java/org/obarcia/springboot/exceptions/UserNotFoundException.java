@@ -5,4 +5,6 @@ package org.obarcia.springboot.exceptions;
  * 
  * @author obarcia
  */
-public class UserNotFoundException extends Exception {}
+public class UserNotFoundException extends Exception
+{
+}

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.obarcia.springboot.components.Utilities;
-import org.obarcia.springboot.models.entity.user.User;
 
 /**
  * Constraint Validator para el uso único de un nickname.
@@ -25,7 +24,8 @@ public class ArrayNotEmptyConstraintValidator implements ConstraintValidator<Arr
     private String message;
     
     @Override
-    public void initialize(ArrayNotEmptyConstraint c) {
+    public void initialize(ArrayNotEmptyConstraint c)
+    {
         fieldName = c.field();
         message = c.message();
     }
@@ -35,13 +35,13 @@ public class ArrayNotEmptyConstraintValidator implements ConstraintValidator<Arr
         try {
             final Object fieldValue = Utilities.getPropertyValue(candidate, fieldName);
 
-            if (fieldValue != null ) {
+            if (fieldValue != null) {
                 if (fieldValue instanceof List) {
-                    if (!((List)fieldValue).isEmpty()) {
+                    if (!((List) fieldValue).isEmpty()) {
                         return true;
                     }
                 } else if (fieldValue instanceof String) {
-                    if (!((String)fieldValue).isEmpty()) {
+                    if (!((String) fieldValue).isEmpty()) {
                         return true;
                     }
                 }
@@ -52,7 +52,8 @@ public class ArrayNotEmptyConstraintValidator implements ConstraintValidator<Arr
 
                 return false;
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {}
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        }
         
         return false;
     }

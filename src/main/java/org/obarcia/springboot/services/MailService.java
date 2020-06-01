@@ -15,11 +15,11 @@ public interface MailService
      * @param request Instancia de la petición.
      * @param user Instancia del usuario.
      */
-    public void sendmailActivation(HttpServletRequest request, User user);
+    void sendmailActivation(HttpServletRequest request, User user);
     /**
      * Enviar un email al usuario para recuperar su contraseña.
      * @param request Instancia de la petición.
      * @param user Instancia del usuario.
      */
-    public void sendmailRecovery(HttpServletRequest request, User user);
+    void sendmailRecovery(HttpServletRequest request, User user);
 }

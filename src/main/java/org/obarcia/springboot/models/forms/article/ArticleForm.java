@@ -127,7 +127,8 @@ public class ArticleForm
     {
         try {
             return FORMAT_FORM.parse(publishDate + " " + publishTime);
-        } catch (ParseException ex) {}
+        } catch (ParseException ex) {
+        }
         
         return null;
     }

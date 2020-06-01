@@ -8,7 +8,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.obarcia.springboot.models.entity.article.Article;
 import org.obarcia.springboot.models.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Repository;
 public class UserExtensionRepositoryImpl implements UserExtensionRepository
 {
     @Autowired
-    EntityManager em;
+    private EntityManager em;
     
     @Override
     public List<User> findByFilter(Map<String, Object> filters, Pageable pageable)
@@ -39,7 +38,7 @@ public class UserExtensionRepositoryImpl implements UserExtensionRepository
         // Aplicar la ordenación
         cq.orderBy(QueryUtils.toOrders(pageable.getSort(), root, builder));
         
-        return em.createQuery(cq).setFirstResult((int)pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+        return em.createQuery(cq).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
     }
     @Override
     public Long countByFilter(Map<String, Object> filters)
@@ -87,6 +86,7 @@ public class UserExtensionRepositoryImpl implements UserExtensionRepository
                                 )
                             );
                             break;
+                        default: break;
                     }
                 }
             }

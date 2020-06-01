@@ -12,6 +12,6 @@ import org.springframework.data.domain.Pageable;
  */
 public interface UserExtensionRepository
 {
-    public List<User> findByFilter(Map<String, Object> filters, Pageable pageable);
-    public Long countByFilter(Map<String, Object> filters);
+    List<User> findByFilter(Map<String, Object> filters, Pageable pageable);
+    Long countByFilter(Map<String, Object> filters);
 }

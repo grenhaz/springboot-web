@@ -7,7 +7,6 @@ import org.obarcia.springboot.exceptions.SaveException;
 import org.obarcia.springboot.models.entity.article.Article;
 import org.obarcia.springboot.models.entity.article.Comment;
 import org.obarcia.springboot.models.forms.article.CommentForm;
-import org.obarcia.springboot.models.AccountDetails;
 import org.obarcia.springboot.models.entity.user.User;
 import org.obarcia.springboot.services.ArticleService;
 import org.obarcia.springboot.services.UserService;
@@ -38,12 +37,12 @@ public class WebController
      * Artículos por página.
      */
     @Value("${articles.perPage:10}")
-    private int ARTICLES_PER_PAGE;
+    private int articlesPerPage;
     /**
      * Comentarios por página.
      */
     @Value("${comments.perPage:10}")
-    private int COMMENTS_PER_PAGE;
+    private int commentsPerPage;
 
     /**
      * Instancia del servicio de usuarios.
@@ -164,7 +163,7 @@ public class WebController
             // Si no hay errores
             if (!result.hasErrors()) {
                 // Obtener el usuario conectado
-                String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+                String username = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
                 User user = userService.getUserByEmail(username);
                 if (user != null) {
                     // Crear el comentario
@@ -203,7 +202,7 @@ public class WebController
     {
         return new ModelAndView("articles/comments.ajax")
                 .addObject("id",        id)
-                .addObject("comments",  articleService.getComments(id, 1, COMMENTS_PER_PAGE));
+                .addObject("comments",  articleService.getComments(id, 1, commentsPerPage));
     }
     /**
      * Listado de comentarios.
@@ -218,7 +217,7 @@ public class WebController
     {
         return new ModelAndView("articles/comments.ajax")
                 .addObject("id",        id)
-                .addObject("comments",  articleService.getComments(id, page, COMMENTS_PER_PAGE));
+                .addObject("comments",  articleService.getComments(id, page, commentsPerPage));
     }
     /**
      * Listado de artículos por búsqueda.
@@ -234,7 +233,7 @@ public class WebController
         return new ModelAndView("articles/articles.search.ajax")
                 .addObject("tag",       tag)
                 .addObject("search",    text)
-                .addObject("articles",  articleService.getArticlesSearch(1, ARTICLES_PER_PAGE, tag, text));
+                .addObject("articles",  articleService.getArticlesSearch(1, articlesPerPage, tag, text));
     }
     /**
      * Listado de artículos por búsqueda.
@@ -252,7 +251,7 @@ public class WebController
         return new ModelAndView("articles/articles.search.ajax")
                 .addObject("tag",       tag)
                 .addObject("search",    text)
-                .addObject("articles",  articleService.getArticlesSearch(page, ARTICLES_PER_PAGE, tag, text));
+                .addObject("articles",  articleService.getArticlesSearch(page, articlesPerPage, tag, text));
     }
     /**
      * Listado de artículos.
@@ -271,7 +270,7 @@ public class WebController
                 .addObject("tag",       tag)
                 .addObject("type",      type)
                 .addObject("menu",      menu)
-                .addObject("articles",  articleService.getArticlesAll(1, ARTICLES_PER_PAGE, tag, type));
+                .addObject("articles",  articleService.getArticlesAll(1, articlesPerPage, tag, type));
     }
     /**
      * Listado de artículos.
@@ -292,6 +291,6 @@ public class WebController
                 .addObject("tag",       tag)
                 .addObject("type",      type)
                 .addObject("menu",      menu)
-                .addObject("articles",  articleService.getArticlesAll(page, ARTICLES_PER_PAGE, tag, type));
+                .addObject("articles",  articleService.getArticlesAll(page, articlesPerPage, tag, type));
     }
 }

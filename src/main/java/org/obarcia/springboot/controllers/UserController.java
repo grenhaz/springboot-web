@@ -51,7 +51,7 @@ public class UserController
      * Instancia del Contexto del servlet.
      */
     @Autowired
-    ServletContext servletContext;
+    private ServletContext servletContext;
     /**
      * Instancia del servicio de emails
      */
@@ -109,7 +109,7 @@ public class UserController
             HttpServletResponse response)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/";
@@ -199,7 +199,7 @@ public class UserController
             userService.save(user);
             
             // Auto loguear al usuario
-            AccountDetails userDetails = (AccountDetails)userDetailsService.loadUserByUsername(user.getEmail());
+            AccountDetails userDetails = (AccountDetails) userDetailsService.loadUserByUsername(user.getEmail());
             if (userDetails != null) {
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -240,7 +240,7 @@ public class UserController
             userService.save(user);
             
             // Auto loguear al usuario
-            AccountDetails userDetails = (AccountDetails)userDetailsService.loadUserByUsername(user.getEmail());
+            AccountDetails userDetails = (AccountDetails) userDetailsService.loadUserByUsername(user.getEmail());
             if (userDetails != null) {
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -320,8 +320,8 @@ public class UserController
     {
         ProfileForm form = new ProfileForm();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+        if (auth != null) {
+            String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
             User account = userService.getUserByEmail(username);
             if (account != null) {
                 form.setId(account.getId());
@@ -355,8 +355,8 @@ public class UserController
     {
         if (!result.hasErrors()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null){
-                String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+            if (auth != null) {
+                String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
                 User account = userService.getUserByEmail(username);
                 if (account != null && account.getId().equals(form.getId())) {
                     account.setNickname(form.getNickname());
@@ -392,8 +392,8 @@ public class UserController
     {
         PasswordForm form = new PasswordForm();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+        if (auth != null) {
+            String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
             User account = userService.getUserByEmail(username);
             if (account != null) {
                 form.setId(account.getId());
@@ -424,8 +424,8 @@ public class UserController
     {
         if (!result.hasErrors()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null){
-                String username = ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername();
+            if (auth != null) {
+                String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
                 User account = userService.getUserByEmail(username);
                 if (account != null && account.getId().equals(form.getId())) {
                     User user = userService.getUserById(account.getId());

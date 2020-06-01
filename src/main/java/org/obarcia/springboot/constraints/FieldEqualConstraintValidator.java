@@ -1,7 +1,6 @@
 package org.obarcia.springboot.constraints;
 
 import java.lang.reflect.InvocationTargetException;
-import javax.management.IntrospectionException;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.obarcia.springboot.components.Utilities;
@@ -49,7 +48,8 @@ public class FieldEqualConstraintValidator implements ConstraintValidator<FieldE
 
                 return false;
             }
-        } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {}
+        } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+        }
         
         return true;
     }

@@ -43,7 +43,7 @@ public class EmailUniqueConstraintValidator implements ConstraintValidator<Email
             final Object id = Utilities.getPropertyValue(candidate, "id");
             final Object email = Utilities.getPropertyValue(candidate, fieldName);
 
-            User user = userService.getUserByEmail((String)email);
+            User user = userService.getUserByEmail((String) email);
             if  (user == null || (id != null && user.getId().equals(id))) {
                 return true;
             } else {
@@ -54,7 +54,8 @@ public class EmailUniqueConstraintValidator implements ConstraintValidator<Email
 
                 return false;
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {}
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        }
         
         return false;
     }

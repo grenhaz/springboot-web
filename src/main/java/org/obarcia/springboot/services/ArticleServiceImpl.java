@@ -239,7 +239,6 @@ public class ArticleServiceImpl implements ArticleService
     @Transactional(readOnly = true)
     public List<Article> getArticlesMoreComments(String tag, int count)
     {
-        // TODO: Obtener los artículos más vistos / comentados.
         // BUG: https://hibernate.atlassian.net/browse/HHH-1615
         return null;
     }

@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.obarcia.springboot.exceptions.ArticleNotFoundException;
 import org.obarcia.springboot.exceptions.PageNotFoundException;
-import org.obarcia.springboot.services.MailServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,7 +26,7 @@ public class ExceptionHandlingController
      * @return Vista resultante.
      */
     @ExceptionHandler(ArticleNotFoundException.class)
-    @ResponseStatus(value=HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView actionArticleNotFound(Exception ex)
     {
         return new ModelAndView("error")
@@ -40,8 +39,8 @@ public class ExceptionHandlingController
      * @param ex Instancia de la excepción.
      * @return Vista resultante.
      */
-    @ExceptionHandler({PageNotFoundException.class,NoHandlerFoundException.class})
-    @ResponseStatus(value=HttpStatus.NOT_FOUND)
+    @ExceptionHandler({PageNotFoundException.class, NoHandlerFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView actionNoHandler(Exception ex)
     {
         return new ModelAndView("error")
@@ -55,7 +54,7 @@ public class ExceptionHandlingController
      * @return Vista resultante.
      */
     @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(value=HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     public ModelAndView actionAccessDenied(Exception ex)
     {
         return new ModelAndView("error")
@@ -69,7 +68,7 @@ public class ExceptionHandlingController
      * @return Vista resultante.
      */
     @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView actionInternalError(Exception ex)
     {
         Logger.getLogger(ExceptionHandlingController.class.getName()).log(Level.SEVERE, null, ex);

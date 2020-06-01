@@ -53,10 +53,10 @@ public class FileBrowser
             int index = name.lastIndexOf(".");
             if (index >= 0) {
                 String extension = name.substring(index + 1);
-                return (extension.equals("jpeg") || 
-                        extension.equals("jpg") ||
-                        extension.equals("png") || 
-                        extension.equals("gif"));
+                return (extension.equals("jpeg") 
+                        || extension.equals("jpg")
+                        || extension.equals("png")
+                        || extension.equals("gif"));
             }
         }
         

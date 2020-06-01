@@ -5,4 +5,6 @@ package org.obarcia.springboot.exceptions;
  * 
  * @author obarcia
  */
-public class PageNotFoundException extends Exception {}
+public class PageNotFoundException extends Exception 
+{
+}

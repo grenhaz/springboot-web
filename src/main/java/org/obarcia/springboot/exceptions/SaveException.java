@@ -5,4 +5,6 @@ package org.obarcia.springboot.exceptions;
  * 
  * @author obarcia
  */
-public class SaveException extends Exception {}
+public class SaveException extends Exception
+{
+}

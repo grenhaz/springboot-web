@@ -22,7 +22,7 @@ public class BrowserServiceImpl implements BrowserService
      * Instancia del contexto.
      */
     @Autowired
-    ServletContext context; 
+    private ServletContext context; 
     
     /**
      * Comprador de ficheros.
@@ -73,7 +73,11 @@ public class BrowserServiceImpl implements BrowserService
                 int index = path.lastIndexOf(path, path.length() - 2);
                 FileBrowser back = new FileBrowser();
                 back.setIsFile(false);
-                back.setFilename(index >= 0 ? path.substring(0, index) : "");
+                if (index >= 0) {
+                    back.setFilename(path.substring(0, index));
+                } else {
+                    back.setFilename("");
+                }
                 back.setName("..");
                 files.add(back);
             }

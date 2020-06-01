@@ -83,7 +83,11 @@ public class AccountDetails extends User
     }
     public String getAvatar()
     {
-        return (avatar != null && !avatar.isEmpty() ? avatar : "anonymous.png");
+        if (avatar != null && !avatar.isEmpty()) {
+            return avatar;
+        } else {
+            return "anonymous.png";
+        }
     }
     public void setAvatar(String value)
     {

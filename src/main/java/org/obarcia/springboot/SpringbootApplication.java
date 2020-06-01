@@ -4,10 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-// TODO: Optimizar el war
-// TODO: Añadir comentarios que falten
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-public class SpringbootApplication
+public final class SpringbootApplication
 {
     public static void main(String[] args)
     {

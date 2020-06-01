@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 public class CommentExtensionRepositoryImpl implements CommentExtensionRepository
 {
     @Autowired
-    EntityManager em;
+    private EntityManager em;
     
     @Override
     public List<Comment> findByFilter(Map<String, Object> filters, Pageable pageable)
@@ -38,7 +38,7 @@ public class CommentExtensionRepositoryImpl implements CommentExtensionRepositor
         // Aplicar la ordenación
         cq.orderBy(QueryUtils.toOrders(pageable.getSort(), root, builder));
         
-        return em.createQuery(cq).setFirstResult((int)pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+        return em.createQuery(cq).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
     }
     @Override
     public Long countByFilter(Map<String, Object> filters)
@@ -83,6 +83,7 @@ public class CommentExtensionRepositoryImpl implements CommentExtensionRepositor
                         case "all":
                             predicates.add(builder.like(root.<String>get("content"), "%" + entry.getValue() + "%"));
                             break;
+                        default: break;
                     }
                 }
             }

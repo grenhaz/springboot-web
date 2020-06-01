@@ -31,8 +31,7 @@ public class MailServiceImpl implements MailService
         String url = request.getContextPath() + "/user/activate?k=" + user.getUkey();
         
         try {
-            String htmlMsg = "" +
-                    "<p>Pulse sobre el <a href='" + url + "'>ENLACE</a> para la activación de la cuenta.";
+            String htmlMsg = "<p>Pulse sobre el <a href='" + url + "'>ENLACE</a> para la activación de la cuenta.";
             
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper;
@@ -51,8 +50,7 @@ public class MailServiceImpl implements MailService
         String url = request.getContextPath() + "/user/recover?k=" + user.getUkey();
         
         try {
-            String htmlMsg = "" +
-                    "<p>Pulse sobre el <a href='" + url + "'>ENLACE</a> para la recuperación de la cuenta.";
+            String htmlMsg = "<p>Pulse sobre el <a href='" + url + "'>ENLACE</a> para la recuperación de la cuenta.";
             
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper;

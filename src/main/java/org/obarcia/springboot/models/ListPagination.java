@@ -20,7 +20,7 @@ public class ListPagination<T>
     /**
      * Total de registros.
      */
-    private Long total = (long)0;
+    private Long total = (long) 0;
     /**
      * Registros.
      */
@@ -45,7 +45,11 @@ public class ListPagination<T>
     public Integer getPages()
     {
         if (limit > 0) {
-            return (total.intValue() / limit) + (total.intValue() % limit > 0 ? 1 : 0);
+            if (total.intValue() % limit > 0) {
+                return (total.intValue() / limit) + 1;
+            } else {
+                return (total.intValue() / limit);
+            }
         }
         
         return 1;

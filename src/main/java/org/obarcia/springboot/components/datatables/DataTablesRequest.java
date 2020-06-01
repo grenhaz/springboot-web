@@ -78,8 +78,8 @@ public class DataTablesRequest
                 columnsIndex.put(i, c);
                 columns.put(data, c);
             }
-            i ++;
-        } while(data != null);
+            i++;
+        } while (data != null);
         
         // Orden
         String column;
@@ -90,13 +90,21 @@ public class DataTablesRequest
                 DataTablesColumn dtc = columnsIndex.getOrDefault(Integer.parseInt(column), null);
                 if (dtc != null) {
                     DataTablesOrder dto = new DataTablesOrder();
-                    dto.setData(dtc.getName() != null && !dtc.getName().isEmpty() ? dtc.getName() : dtc.getData());
-                    dto.setDir(request.getParameter("order[" + i + "][dir]").equals("asc") ? DataTablesOrder.ORDER_ASC : DataTablesOrder.ORDER_DESC);
+                    if (dtc.getName() != null && !dtc.getName().isEmpty()) {
+                        dto.setData(dtc.getName());
+                    } else {
+                        dto.setData(dtc.getData());
+                    }
+                    if (request.getParameter("order[" + i + "][dir]").equals("asc")) {
+                        dto.setDir(DataTablesOrder.ORDER_ASC);
+                    } else {
+                        dto.setDir(DataTablesOrder.ORDER_DESC);
+                    }
                     order.add(dto);
                 }
             }
-            i ++;
-        } while(column != null);
+            i++;
+        } while (column != null);
         
         // Search
         String se = request.getParameter("search[value]");
@@ -111,10 +119,10 @@ public class DataTablesRequest
      */
     public boolean hasColumnSearch(String name)
     {
-        return (columns.containsKey(name) && 
-                columns.get(name).getSearchable().equals(Boolean.TRUE) && 
-                columns.get(name).getSearch() != null &&
-                !columns.get(name).getSearch().isEmpty());
+        return (columns.containsKey(name)
+                && columns.get(name).getSearchable().equals(Boolean.TRUE)
+                && columns.get(name).getSearch() != null
+                && !columns.get(name).getSearch().isEmpty());
     }
     /**
      * Devuelve el texto de la búsqueda de una columna.

@@ -13,7 +13,7 @@ import static org.springframework.beans.BeanUtils.getPropertyDescriptor;
  * 
  * @author obarcia
  */
-public class Utilities
+public final class Utilities
 {
     /**
      * Formato de fecha
@@ -25,7 +25,7 @@ public class Utilities
      * @param numchars Número de caracteres.
      * @return Texto aleatorio.
      */
-    public final static String getRandomHexString(int numchars)
+    public static String getRandomHexString(int numchars)
     {
         Random r = new Random();
         StringBuilder sb = new StringBuilder();
@@ -76,15 +76,21 @@ public class Utilities
                 return FORMAT.format(dt);
             } else if (diff > 3600) {
                 // Más de una 1 hora
-                int value = (int)(diff / 3600);
+                int value = (int) (diff / 3600);
                 return value + " h";
             } else {
                 // Minutos
-                int value = (int)(diff / 60);
+                int value = (int) (diff / 60);
                 return value + " m";
             }
         }
         
         return "";
+    }
+    /**
+     * Hide constructor.
+     */
+    private Utilities()
+    {
     }
 }

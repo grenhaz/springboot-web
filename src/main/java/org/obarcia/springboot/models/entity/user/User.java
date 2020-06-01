@@ -56,7 +56,7 @@ public class User
     @NotEmpty
     @Size(max = 16)
     @Column(name = "user_role")
-    private String user_role;
+    private String userRole;
     /**
      * Usuario activado o no.
      */
@@ -127,11 +127,11 @@ public class User
     }
     public String getUserRole()
     {
-        return user_role;
+        return userRole;
     }
     public void setUserRole(String value)
     {
-        user_role = value;
+        userRole = value;
     }
     public Boolean getActive()
     {

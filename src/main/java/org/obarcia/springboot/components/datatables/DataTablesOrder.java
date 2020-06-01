@@ -7,8 +7,8 @@ package org.obarcia.springboot.components.datatables;
  */
 public class DataTablesOrder
 {
-    public static int ORDER_ASC = 0;
-    public static int ORDER_DESC = 1;
+    public static final int ORDER_ASC = 0;
+    public static final int ORDER_DESC = 1;
     
     /**
      * Nombre de la columna.

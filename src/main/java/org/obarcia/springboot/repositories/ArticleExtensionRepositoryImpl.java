@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 public class ArticleExtensionRepositoryImpl implements ArticleExtensionRepository
 {
     @Autowired
-    EntityManager em;
+    private EntityManager em;
     
     @Override
     public List<Article> findByFilter(Map<String, Object> filters, Pageable pageable)
@@ -38,7 +38,7 @@ public class ArticleExtensionRepositoryImpl implements ArticleExtensionRepositor
         // Aplicar la ordenación
         cq.orderBy(QueryUtils.toOrders(pageable.getSort(), root, builder));
         
-        return em.createQuery(cq).setFirstResult((int)pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+        return em.createQuery(cq).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
     }
     @Override
     public Long countByFilter(Map<String, Object> filters)
@@ -96,6 +96,7 @@ public class ArticleExtensionRepositoryImpl implements ArticleExtensionRepositor
                                 )
                             );
                             break;
+                        default: break;
                     }
                 }
             }

@@ -16,11 +16,11 @@ public class DataTablesResponse<T>
     /**
      * Total de registros.
      */
-    private Long recordsTotal = (long)0;
+    private Long recordsTotal = (long) 0;
     /**
      * Total de registros filtrados.
      */
-    private Long recordsFiltered = (long)0;
+    private Long recordsFiltered = (long) 0;
     /**
      * Registros.
      */

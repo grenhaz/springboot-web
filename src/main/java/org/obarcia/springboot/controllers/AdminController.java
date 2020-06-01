@@ -244,26 +244,23 @@ public class AdminController
         if (user != null) {
             switch (action) {
                 case "active":
-                {
-                    // Activar / Desactivar el usuario
-                    Boolean value = Boolean.valueOf(request.getParameter("value"));
-                    user.setActive(value);
-                    
                     try {
+                        // Activar / Desactivar el usuario
+                        user.setActive(Boolean.valueOf(request.getParameter("value")));
+
                         // Guardar el usuario
                         userService.save(user);
 
                         return new ActionResponse(true);
-                    } catch(SaveException e) {
+                    } catch (SaveException e) {
                         return new ActionResponse(false, 500, "");
                     }
-                }
+                    
                 case "recovery":
-                {
-                    // Reenviar el mensaje de recuperación
-                    user.setUkey(Utilities.getRandomHexString(64));
-
                     try {
+                        // Reenviar el mensaje de recuperación
+                        user.setUkey(Utilities.getRandomHexString(64));
+                        
                         // Guardar el usuario
                         userService.save(user);
 
@@ -272,12 +269,11 @@ public class AdminController
 
                         // Redireccionar con mensaje
                         return new ActionResponse(true);
-                    } catch(SaveException e) {
+                    } catch (SaveException e) {
                         return new ActionResponse(false, 500, "");
                     }
-                }
+                    
                 case "activate":
-                {
                     // Reenviar el mensaje de activación
                     if (user.getActive().equals(Boolean.FALSE)) {
                         user.setUkey(Utilities.getRandomHexString(64));
@@ -291,12 +287,13 @@ public class AdminController
 
                             // Redireccionar con mensaje
                             return new ActionResponse(true);
-                        } catch(SaveException e) {
+                        } catch (SaveException e) {
                             return new ActionResponse(false, 500, "");
                         }
+                        
                     }
-                }
-                break;
+                    break;
+                default: break;
             }
             
             return new ActionResponse(false, 500, "");
@@ -423,22 +420,18 @@ public class AdminController
         if (article != null) {
             switch (action) {
                 case "active":
-                {
-                    // Activar / Desactivar el usuario
-                    Boolean value = Boolean.valueOf(request.getParameter("value"));
-                    article.setActive(value);
-                    
                     try {
+                        // Activar / Desactivar el usuario
+                        article.setActive(Boolean.valueOf(request.getParameter("value")));
+
                         // Guardar el artículo
                         articleService.save(article);
 
                         return new ActionResponse(true);
-                    } catch(SaveException e) {
+                    } catch (SaveException e) {
                         return new ActionResponse(false, 500, "");
                     }
-                }
                 case "erase":
-                {
                     // Borrar o mostrar un comentario
                     Integer commentId = Integer.parseInt(request.getParameter("comment"));
                     Comment comment = articleService.getComment(commentId);
@@ -449,11 +442,12 @@ public class AdminController
                             articleService.save(comment);
                             
                             return new ActionResponse(true);
-                        } catch(SaveException e) {
+                        } catch (SaveException e) {
                             return new ActionResponse(false, 500, "");
                         }
                     }
-                }
+                    break;
+                default: break;
             }
             return null;
         } else {

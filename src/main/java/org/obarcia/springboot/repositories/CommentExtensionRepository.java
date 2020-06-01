@@ -12,6 +12,6 @@ import org.springframework.data.domain.Pageable;
  */
 public interface CommentExtensionRepository
 {
-    public List<Comment> findByFilter(Map<String, Object> filters, Pageable pageable);
-    public Long countByFilter(Map<String, Object> filters);
+    List<Comment> findByFilter(Map<String, Object> filters, Pageable pageable);
+    Long countByFilter(Map<String, Object> filters);
 }
