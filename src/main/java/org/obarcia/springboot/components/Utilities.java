@@ -15,10 +15,7 @@ import static org.springframework.beans.BeanUtils.getPropertyDescriptor;
  */
 public final class Utilities
 {
-    /**
-     * Formato de fecha
-     */
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    private static final Random random = new Random();
     
     /**
      * Devuelve un texto aleatoria formado por valores hexadecimales.
@@ -27,14 +24,14 @@ public final class Utilities
      */
     public static String getRandomHexString(int numchars)
     {
-        Random r = new Random();
         StringBuilder sb = new StringBuilder();
         while (sb.length() < numchars) {
-            sb.append(Integer.toHexString(r.nextInt()));
+            sb.append(Integer.toHexString(random.nextInt()));
         }
 
         return sb.toString().substring(0, numchars);
     }
+    
     /**
      * Devuelve el valor de una propiedad de una instancia BEAN.
      * @param bean Instancia.
@@ -60,6 +57,7 @@ public final class Utilities
         
         return readMethod.invoke(bean);
     }
+    
     /**
      * Devuelve el tiempo transcurrido.
      * @param dt Tiempo base,
@@ -73,7 +71,7 @@ public final class Utilities
             long diff = (now - ts) / 1000;
             if (diff > 24 * 60 * 60) {
                 // Más de un día
-                return FORMAT.format(dt);
+                return new SimpleDateFormat("dd/MM/yyyy").format(dt);
             } else if (diff > 3600) {
                 // Más de una 1 hora
                 int value = (int) (diff / 3600);
@@ -87,10 +85,12 @@ public final class Utilities
         
         return "";
     }
+    
     /**
      * Hide constructor.
      */
     private Utilities()
     {
+    	// Hide
     }
 }

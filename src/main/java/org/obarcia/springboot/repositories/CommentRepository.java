@@ -20,6 +20,7 @@ public interface CommentRepository extends CrudRepository<Comment, Integer>, Com
      * @return Listado de comentarios.
      */
     List<Comment> findAll(Pageable pageable);
+    
     /**
      * Devuelve los comentarios por artículo.
      * @param idArticle Identificador del artículo.
@@ -30,6 +31,7 @@ public interface CommentRepository extends CrudRepository<Comment, Integer>, Com
     List<Comment> findByArticle(@Param("idArticle") Integer idArticle, Pageable pageable);
     @Query("SELECT COUNT(c) FROM Comment c WHERE c.article.id = :idArticle AND erased = false")
     Long countByArticle(@Param("idArticle") Integer idArticle);
+    
     /**
      * Devuelve los comentarios por usuario.
      * @param idUser Identificador del usuario.

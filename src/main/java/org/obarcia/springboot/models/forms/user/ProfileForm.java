@@ -37,22 +37,27 @@ public class ProfileForm
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getNickname()
     {
         return nickname;
     }
+    
     public void setNickname(String value)
     {
         nickname = value;
     }
+    
     public String getAvatar()
     {
         return avatar;
     }
+    
     public void setAvatar(String value)
     {
         avatar = value;

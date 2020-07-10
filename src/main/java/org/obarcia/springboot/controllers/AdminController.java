@@ -85,6 +85,7 @@ public class AdminController
         return new ModelAndView("admin/index")
             .addObject("lastComments",  articleService.getLastComments(null, 10));
     }
+    
     /**
      * Listado de usuarios.
      * @return Vista resultante.
@@ -94,6 +95,7 @@ public class AdminController
     {
         return "admin/users";
     }
+    
     /**
      * Listado de usuarios para el DataTables.
      * @param request Instancia de la petición.
@@ -104,6 +106,7 @@ public class AdminController
     {
         return userService.getUsers(new DataTablesRequest(request));
     }
+    
     /**
      * Listado de artículos.
      * @return Vista resultante.
@@ -113,6 +116,7 @@ public class AdminController
     {
         return "admin/articles";
     }
+    
     @GetMapping("/ajax/browser")
     public ModelAndView actionBrowserAjax(
         @RequestParam(value = "field", required = true) String field,
@@ -125,6 +129,7 @@ public class AdminController
             .addObject("type", type)
             .addObject("files", browserService.getFiles(path, type));
     }
+    
     /**
      * Listado de artículos para el DataTables.
      * @param request Instancia de la petición.
@@ -135,6 +140,7 @@ public class AdminController
     {
         return articleService.getArticles(new DataTablesRequest(request));
     }
+    
     /**
      * Listado de artículos para el DataTables.
      * @param id Identificador del artículo.
@@ -148,6 +154,7 @@ public class AdminController
     {
         return articleService.getComments(id, new DataTablesRequest(request));
     }
+    
     /**
      * Formulario de un usuario.
      * @param id Identificador del usuario.
@@ -176,6 +183,7 @@ public class AdminController
             throw new UserNotFoundException();
         }
     }
+    
     /**
      * Formulario de un usuario.
      * @param id Identificador del usuario.
@@ -223,6 +231,7 @@ public class AdminController
             throw new UserNotFoundException();
         }
     }
+    
     /**
      * Realizar una operación sobre el usuario.
      * @param id Identificador.
@@ -237,62 +246,16 @@ public class AdminController
     public @ResponseBody ActionResponse actionUserAction(
             @PathVariable("id") int id,
             @PathVariable("action") String action,
+            @RequestParam(value = "value", required = false) boolean value,
             RedirectAttributes flash,
-            HttpServletRequest request) throws UserNotFoundException, SaveException
+            HttpServletRequest request) throws UserNotFoundException
     {
         User user = userService.getUserById(id);
         if (user != null) {
             switch (action) {
-                case "active":
-                    try {
-                        // Activar / Desactivar el usuario
-                        user.setActive(Boolean.valueOf(request.getParameter("value")));
-
-                        // Guardar el usuario
-                        userService.save(user);
-
-                        return new ActionResponse(true);
-                    } catch (SaveException e) {
-                        return new ActionResponse(false, 500, "");
-                    }
-                    
-                case "recovery":
-                    try {
-                        // Reenviar el mensaje de recuperación
-                        user.setUkey(Utilities.getRandomHexString(64));
-                        
-                        // Guardar el usuario
-                        userService.save(user);
-
-                        // Enviar el mail de recuperación
-                        mailService.sendmailRecovery(request, user);
-
-                        // Redireccionar con mensaje
-                        return new ActionResponse(true);
-                    } catch (SaveException e) {
-                        return new ActionResponse(false, 500, "");
-                    }
-                    
-                case "activate":
-                    // Reenviar el mensaje de activación
-                    if (user.getActive().equals(Boolean.FALSE)) {
-                        user.setUkey(Utilities.getRandomHexString(64));
-                        
-                        try {
-                            // Guardar el usuario
-                            userService.save(user);
-
-                            // Enviar el mail de recuperación
-                            mailService.sendmailActivation(request, user);
-
-                            // Redireccionar con mensaje
-                            return new ActionResponse(true);
-                        } catch (SaveException e) {
-                            return new ActionResponse(false, 500, "");
-                        }
-                        
-                    }
-                    break;
+                case "active": return activateUser(user, value);
+                case "recovery": return recoveryAccount(user, request);
+                case "activate": return activateAccount(user, request);
                 default: break;
             }
             
@@ -302,6 +265,7 @@ public class AdminController
             throw new UserNotFoundException();
         }
     }
+    
     /**
      * Formulario de un artículo.
      * @param id Identificador de lartículo.
@@ -341,6 +305,7 @@ public class AdminController
                 .addObject("id", id)
                 .addObject("form", form);
     }
+    
     /**
      * Formulario de un artículo.
      * @param id Identificador del artículo.
@@ -402,6 +367,7 @@ public class AdminController
                 .addObject("id", id)
                 .addObject("form", form);
     }
+    
     /**
      * Realizar una operación sobre el artículo.
      * @param id Identificador.
@@ -454,5 +420,62 @@ public class AdminController
             // No se encontró el artículo
             throw new ArticleNotFoundException();
         }
+    }
+    
+    private ActionResponse activateUser(User user, boolean value)
+    {
+    	try {
+            // Activar / Desactivar el usuario
+            user.setActive(value);
+
+            // Guardar el usuario
+            userService.save(user);
+
+            return new ActionResponse(true);
+        } catch (SaveException e) {
+            return new ActionResponse(false, 500, "");
+        }
+    }
+    
+    private ActionResponse recoveryAccount(User user, HttpServletRequest request)
+    {
+    	try {
+            // Reenviar el mensaje de recuperación
+            user.setUkey(Utilities.getRandomHexString(64));
+            
+            // Guardar el usuario
+            userService.save(user);
+
+            // Enviar el mail de recuperación
+            mailService.sendmailRecovery(request, user);
+
+            // Redireccionar con mensaje
+            return new ActionResponse(true);
+        } catch (SaveException e) {
+            return new ActionResponse(false, 500, "");
+        }
+    }
+    
+    private ActionResponse activateAccount(User user, HttpServletRequest request)
+    {
+    	// Reenviar el mensaje de activación
+        if (user.getActive().equals(Boolean.FALSE)) {
+            user.setUkey(Utilities.getRandomHexString(64));
+            
+            try {
+                // Guardar el usuario
+                userService.save(user);
+
+                // Enviar el mail de recuperación
+                mailService.sendmailActivation(request, user);
+
+                // Redireccionar con mensaje
+                return new ActionResponse(true);
+            } catch (SaveException e) {
+                // Omitted
+            }
+        }
+        
+        return new ActionResponse(false, 500, "");
     }
 }

@@ -75,6 +75,7 @@ public class Comment
         
         return content;
     }
+    
     /**
      * Devuelve la fecha de publicación formateada.
      * @return Fecha de publicación formateada.
@@ -83,6 +84,7 @@ public class Comment
     {
         return Utilities.getElapsedTime(publish);
     }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -90,46 +92,57 @@ public class Comment
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getContent()
     {
         return content;
     }
+    
     public void setContent(String value)
     {
         content = value;
     }
+    
     public Date getPublish()
     {
         return publish;
     }
+    
     public void setPublish(Date value)
     {
         publish = value;
     }
+    
     public Boolean getErased()
     {
         return erased;
     }
+    
     public void setErased(Boolean value)
     {
         erased = value;
     }
+    
     public Article getArticle()
     {
         return article;
     }
+    
     public void setArticle(Article value)
     {
         article = value;
     }
+    
     public User getUser()
     {
         return user;
     }
+    
     public void setUser(User value)
     {
         user = value;

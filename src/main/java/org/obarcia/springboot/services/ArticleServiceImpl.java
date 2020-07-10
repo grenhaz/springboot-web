@@ -1,5 +1,6 @@
 package org.obarcia.springboot.services;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,7 @@ public class ArticleServiceImpl implements ArticleService
         response.setRecordsTotal(articleRepository.count());
         return response;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public DataTablesResponse<Comment> getComments(Integer id, DataTablesRequest req)
@@ -111,6 +113,7 @@ public class ArticleServiceImpl implements ArticleService
         response.setRecordsTotal(commentRepository.count());
         return response;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesAll(int page, int perPage)
@@ -119,6 +122,7 @@ public class ArticleServiceImpl implements ArticleService
         
         return createListPagination(page, perPage, articleRepository.count(), slist);
     }
+    
     @Override
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesAll(int page, int perPage, String type)
@@ -131,6 +135,7 @@ public class ArticleServiceImpl implements ArticleService
         
         return createListPagination(page, perPage, articleRepository.countByFilter(filters), slist);
     }
+    
     @Override
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesAll(int page, int perPage, String tag, String type)
@@ -144,6 +149,7 @@ public class ArticleServiceImpl implements ArticleService
         
         return createListPagination(page, perPage, articleRepository.countByFilter(filters), slist);
     }
+    
     @Override
     @Transactional(readOnly = true)
     public ListPagination<Article> getArticlesSearch(int page, int perPage, String tag, String search)
@@ -157,23 +163,7 @@ public class ArticleServiceImpl implements ArticleService
         
         return createListPagination(page, perPage, articleRepository.countByFilter(filters), slist);
     }
-    private ListPagination createListPagination(int page, int perPage, long total, List<Article> slist)
-    {
-        // Obtener el contador de comentarios
-        if (slist != null) {
-            for (Article a: slist) {
-                a.getCommentsCount();
-            }
-        }
-        
-        // Listado paginado
-        ListPagination list = new ListPagination();
-        list.setRecords(slist);
-        list.setOffset((page - 1) * perPage);
-        list.setLimit(perPage);
-        list.setTotal(total);
-        return list;
-    }
+    
     @Override
     @Transactional(readOnly = true)
     public List<Article> getArticlesImportants(String tag, int count)
@@ -194,6 +184,7 @@ public class ArticleServiceImpl implements ArticleService
         
         return slist;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public List<Article> getArticlesImportants(String tag, String type, int count)
@@ -215,6 +206,7 @@ public class ArticleServiceImpl implements ArticleService
         
         return slist;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public List<Article> getArticlesByType(String tag, String type, int count)
@@ -235,24 +227,27 @@ public class ArticleServiceImpl implements ArticleService
         
         return slist;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public List<Article> getArticlesMoreComments(String tag, int count)
     {
         // BUG: https://hibernate.atlassian.net/browse/HHH-1615
-        return null;
+        return Collections.emptyList();
     }
+    
     @Override
     @Transactional(readOnly = true)
     public ListPagination<Comment> getComments(int id, int page, int perPage)
     {
-        ListPagination list = new ListPagination();
+        ListPagination<Comment> list = new ListPagination<>();
         list.setRecords(commentRepository.findByArticle(id, PageRequest.of(page - 1, perPage, Sort.by("publish").descending())));
         list.setOffset((page - 1) * perPage);
         list.setLimit(perPage);
         list.setTotal(commentRepository.countByArticle(id));
         return list;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public List<Comment> getLastComments(String tag, int count)
@@ -261,16 +256,16 @@ public class ArticleServiceImpl implements ArticleService
         filters.put("active", Boolean.TRUE);
         filters.put("tag", tag);
         
-        List<Comment> list = commentRepository.findByFilter(filters, PageRequest.of(0, count, Sort.by("publish").descending()));
-        
-        return list;
+        return commentRepository.findByFilter(filters, PageRequest.of(0, count, Sort.by("publish").descending()));
     }
+    
     @Override
     @Transactional(readOnly = true)
     public List<Comment> getLastCommentsByUser(int id, int count)
     {
         return commentRepository.findByUser(id, PageRequest.of(0, count, Sort.by("publish").descending()));
     }
+    
     @Override
     @Transactional(readOnly = true)
     public Article getArticle(int id)
@@ -282,6 +277,7 @@ public class ArticleServiceImpl implements ArticleService
         
         return null;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public Comment getComment(int id)
@@ -293,12 +289,14 @@ public class ArticleServiceImpl implements ArticleService
         
         return null;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public Article getArticleByTitle(String title)
     {
         return articleRepository.findByTitle(title);
     }
+    
     @Override
     @Transactional
     public void save(Article article) throws SaveException
@@ -309,6 +307,7 @@ public class ArticleServiceImpl implements ArticleService
             throw new SaveException();
         }
     }
+    
     @Override
     @Transactional
     public void save(Comment comment) throws SaveException
@@ -318,5 +317,23 @@ public class ArticleServiceImpl implements ArticleService
         } catch (HibernateException e) {
             throw new SaveException();
         }
+    }
+    
+    private ListPagination<Article> createListPagination(int page, int perPage, long total, List<Article> slist)
+    {
+        // Obtener el contador de comentarios
+        if (slist != null) {
+            for (Article a: slist) {
+                a.getCommentsCount();
+            }
+        }
+        
+        // Listado paginado
+        ListPagination<Article> list = new ListPagination<>();
+        list.setRecords(slist);
+        list.setOffset((page - 1) * perPage);
+        list.setLimit(perPage);
+        list.setTotal(total);
+        return list;
     }
 }

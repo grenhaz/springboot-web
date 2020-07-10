@@ -27,18 +27,15 @@ public class BrowserServiceImpl implements BrowserService
     /**
      * Comprador de ficheros.
      */
-    private final Comparator<FileBrowser> fileComparator = new Comparator<FileBrowser>() {
-            @Override
-            public int compare(FileBrowser o1, FileBrowser o2) {
-                if (!o1.getIsFile() && o2.getIsFile()) {
-                    return -1;
-                } else if (o1.getIsFile() && !o2.getIsFile()) {
-                    return 1;
-                } else {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            }
-    };
+    private final Comparator<FileBrowser> fileComparator = (o1, o2) -> {
+	    if (!o1.getIsFile().booleanValue() && o2.getIsFile().booleanValue()) {
+	        return -1;
+	    } else if (o1.getIsFile().booleanValue() && !o2.getIsFile().booleanValue()) {
+	        return 1;
+	    } else {
+	        return o1.getName().compareTo(o2.getName());
+	    }
+	};
     
     @Override
     public List<String> getAvatars()
@@ -59,6 +56,7 @@ public class BrowserServiceImpl implements BrowserService
         
         return avatars;
     }
+    
     @Override
     public List<FileBrowser> getFiles(String path, String type)
     {
@@ -89,10 +87,10 @@ public class BrowserServiceImpl implements BrowserService
                     fb.setUrl("/data/articles/" + path + f.getName());
                     fb.setFilename(path + f.getName());
                 } else {
-                    fb.setFilename(path + f.getName() + "/");
+                    fb.setFilename(path + f.getName() + File.pathSeparator);
                 }
                 fb.setName(f.getName());
-                if ((!type.equals("image") && !type.equals("bimage")) || fb.getIsImage() || !fb.getIsFile()) {
+                if ((!type.equals("image") && !type.equals("bimage")) || fb.getIsImage().booleanValue() || !fb.getIsFile().booleanValue()) {
                     files.add(fb);
                 }
             }

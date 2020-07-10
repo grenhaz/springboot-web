@@ -47,22 +47,27 @@ public class RegisterForm
     {
         return email;
     }
+    
     public void setEmail(String value)
     {
         email = value;
     }
+    
     public String getEmailRepeat()
     {
         return emailRepeat;
     }
+    
     public void setEmailRepeat(String value)
     {
         emailRepeat = value;
     }
+    
     public String getNickname()
     {
         return nickname;
     }
+    
     public void setNickname(String value)
     {
         nickname = value;

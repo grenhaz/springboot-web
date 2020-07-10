@@ -42,22 +42,27 @@ public class UserForm
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getEmail()
     {
         return email;
     }
+    
     public void setEmail(String value)
     {
         email = value;
     }
+    
     public String getNickname()
     {
         return nickname;
     }
+    
     public void setNickname(String value)
     {
         nickname = value;

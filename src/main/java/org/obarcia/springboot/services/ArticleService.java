@@ -22,6 +22,7 @@ public interface ArticleService
      * @return Listado de artículos.
      */
     DataTablesResponse<Article> getArticles(DataTablesRequest req);
+    
     /**
      * DataTables: Devuelve el listado de comentarios en función a los parámetros
      * indicados por la petición DataTables.
@@ -30,6 +31,7 @@ public interface ArticleService
      * @return Listado de comentarios.
      */
     DataTablesResponse<Comment> getComments(Integer id, DataTablesRequest req);
+    
     /**
      * Devuelve un listado de artículos.
      * @param page Página.
@@ -37,6 +39,7 @@ public interface ArticleService
      * @return Listado de artículos
      */
     ListPagination<Article> getArticlesAll(int page, int perPage);
+    
     /**
      * Devuelve un listado de artículos.
      * @param page Página.
@@ -45,6 +48,7 @@ public interface ArticleService
      * @return Listado de artículos
      */
     ListPagination<Article> getArticlesAll(int page, int perPage, String type);
+    
     /**
      * Devuelve un listado de artículos.
      * @param page Página.
@@ -54,6 +58,7 @@ public interface ArticleService
      * @return Listado de artículos
      */
     ListPagination<Article> getArticlesAll(int page, int perPage, String tag, String type);
+    
     /**
      * Búsqueda de artículos.
      * @param page Página.
@@ -63,6 +68,7 @@ public interface ArticleService
      * @return Listado de artículos
      */
     ListPagination<Article> getArticlesSearch(int page, int perPage, String tag, String search);
+    
     /**
      * Devuelve un listado de artículos marcados como imporatantes.
      * @param tag Etiqueta de búsqueda.
@@ -70,6 +76,7 @@ public interface ArticleService
      * @return Listado de artículos.
      */
     List<Article> getArticlesImportants(String tag, int count);
+    
     /**
      * Devuelve un listado de artículos marcados como imporatantes.
      * @param tag Etiqueta de búsqueda.
@@ -78,6 +85,7 @@ public interface ArticleService
      * @return Listado de artículos.
      */
     List<Article> getArticlesImportants(String tag, String type, int count);
+    
     /**
      * Devuelve un listado de artículos por tipo.
      * @param tag Etiqueta.
@@ -86,6 +94,7 @@ public interface ArticleService
      * @return Listado de artículos.
      */
     List<Article> getArticlesByType(String tag, String type, int count);
+    
     /**
      * Devuelve un listado de artículos ordenados por número de comentarios.
      * De más comentado a menos.
@@ -94,6 +103,7 @@ public interface ArticleService
      * @return Listado de artículos.
      */
     List<Article> getArticlesMoreComments(String tag, int count);
+    
     /**
      * Devuelve un listado de comentarios de un artículo.
      * @param id Identificador del artículo.
@@ -102,6 +112,7 @@ public interface ArticleService
      * @return Listado de comentarios.
      */
     ListPagination<Comment> getComments(int id, int page, int perPage);
+    
     /**
      * Devuelve un listado de los últimos comentarios.
      * @param tag Etiqueta.
@@ -109,6 +120,7 @@ public interface ArticleService
      * @return Listado de comentarios.
      */
     List<Comment> getLastComments(String tag, int count);
+    
     /**
      * Devuelve un listado de los últimos comentarios de un usuario.
      * @param id Identificador del usuario.
@@ -116,30 +128,35 @@ public interface ArticleService
      * @return Listado de comentarios.
      */
     List<Comment> getLastCommentsByUser(int id, int count);
+    
     /**
      * Devuelve un artículos por su identificador.
      * @param id Identificador del artículo.
      * @return Instancia del artículo.
      */
     Article getArticle(int id);
+    
     /**
      * Devuelve un comentario por su identificador.
      * @param id Identificador del comentario.
      * @return Instancia del comentario o null si no lo encuentra.
      */
     Comment getComment(int id);
+    
     /**
      * Devuelve un artículos por su título.
      * @param title Título.
      * @return Instancia del artículo.
      */
     Article getArticleByTitle(String title);
+    
     /**
      * Guarda un artículo.
      * @param article Instancia del artículo.
      * @throws SaveException
      */
     void save(Article article) throws SaveException;
+    
     /**
      * Guarda un comentario.
      * @param comment Instancia del comentario.

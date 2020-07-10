@@ -29,6 +29,7 @@ public class ArrayNotEmptyConstraintValidator implements ConstraintValidator<Arr
         fieldName = c.field();
         message = c.message();
     }
+    
     @Override
     public boolean isValid(Object candidate, ConstraintValidatorContext cvc)
     {
@@ -36,14 +37,9 @@ public class ArrayNotEmptyConstraintValidator implements ConstraintValidator<Arr
             final Object fieldValue = Utilities.getPropertyValue(candidate, fieldName);
 
             if (fieldValue != null) {
-                if (fieldValue instanceof List) {
-                    if (!((List) fieldValue).isEmpty()) {
-                        return true;
-                    }
-                } else if (fieldValue instanceof String) {
-                    if (!((String) fieldValue).isEmpty()) {
-                        return true;
-                    }
+                if ((fieldValue instanceof List && !((List) fieldValue).isEmpty())
+                	|| (fieldValue instanceof String && !((String) fieldValue).isEmpty())) {
+                    return true;
                 }
                 cvc.disableDefaultConstraintViolation();
                 cvc.buildConstraintViolationWithTemplate(message)
@@ -53,6 +49,7 @@ public class ArrayNotEmptyConstraintValidator implements ConstraintValidator<Arr
                 return false;
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        	// Omitted
         }
         
         return false;

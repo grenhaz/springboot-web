@@ -35,7 +35,6 @@ public class UserAccessService implements UserDetailsService
             auths.add(new SimpleGrantedAuthority(user.getUserRole()));
 
             return new AccountDetails(user.getEmail(), user.getPassword(),
-                            true, true, true, true,
                             auths, user.getNickname(), user.getAvatar(), user.getId());
         } else {
             throw new UsernameNotFoundException("User '" + string + "' not found.");

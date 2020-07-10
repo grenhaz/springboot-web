@@ -32,6 +32,7 @@ public class ActionResponse
         code = c;
         error = e;
     }
+    
     /**
      * Constructor de la clase.
      * @param r Resultado.
@@ -40,6 +41,7 @@ public class ActionResponse
     {
         result = r;
     }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -47,22 +49,27 @@ public class ActionResponse
     {
         return result;
     }
+    
     public void setResult(Boolean value)
     {
         result = value;
     }
+    
     public String getError()
     {
         return error;
     }
+    
     public void setError(String value)
     {
         error = value;
     }
+    
     public Integer getCode()
     {
         return code;
     }
+    
     public void setCode(Integer value)
     {
         code = value;

@@ -26,14 +26,17 @@ public class DataTablesOrder
     {
         return data;
     }
+    
     public void setData(String value)
     {
         data = value;
     }
+    
     public Integer getDir()
     {
         return dir;
     }
+    
     public void setDir(Integer value)
     {
         dir = value;

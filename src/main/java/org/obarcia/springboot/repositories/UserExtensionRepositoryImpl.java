@@ -40,6 +40,7 @@ public class UserExtensionRepositoryImpl implements UserExtensionRepository
         
         return em.createQuery(cq).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
     }
+    
     @Override
     public Long countByFilter(Map<String, Object> filters)
     {
@@ -52,7 +53,8 @@ public class UserExtensionRepositoryImpl implements UserExtensionRepository
         
         return em.createQuery(cq).getSingleResult();
     }
-    private void applyFilters(CriteriaQuery cq, Root<User> root, CriteriaBuilder builder, Map<String, Object> filters)
+    
+    private void applyFilters(CriteriaQuery<?> cq, Root<User> root, CriteriaBuilder builder, Map<String, Object> filters)
     {
         List<Predicate> predicates = new ArrayList<>();
 

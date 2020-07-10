@@ -3,6 +3,8 @@ package org.obarcia.springboot.components.datatables;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -31,11 +33,11 @@ public class DataTablesRequest
     /**
      * Listado de columnas indexadas por su número de columna.
      */
-    private final HashMap<Integer, DataTablesColumn> columnsIndex = new HashMap<>();
+    private final Map<Integer, DataTablesColumn> columnsIndex = new HashMap<>();
     /**
      * Listado de columnas indexadas por su nombre de columna.
      */
-    private final HashMap<String, DataTablesColumn> columns = new HashMap<>();
+    private final Map<String, DataTablesColumn> columns = new HashMap<>();
     /**
      * Listado de ordenaciones.
      */
@@ -49,6 +51,7 @@ public class DataTablesRequest
     {
         setupRequest(request);
     }
+    
     /**
      * Procesar los parámetros de la petición.
      * @param request Instancia de la petición.
@@ -73,7 +76,6 @@ public class DataTablesRequest
                 c.setOrderable(Boolean.valueOf(request.getParameter("columns[" + i + "][orderable]")));
                 String se = request.getParameter("columns[" + i + "][search][value]");
                 // XXX: Search regex
-                Boolean seRegex = Boolean.valueOf(request.getParameter("columns[" + i + "][search][regex]"));
                 c.setSearch(se);
                 columnsIndex.put(i, c);
                 columns.put(data, c);
@@ -109,9 +111,9 @@ public class DataTablesRequest
         // Search
         String se = request.getParameter("search[value]");
         // XXX: Search regex
-        boolean seRegex = Boolean.valueOf(request.getParameter("search[regex]"));
         search = se;
     }
+    
     /**
      * Devuelve si una columna tiene búsqueda o no.
      * @param name Nombre de la columna.
@@ -124,6 +126,7 @@ public class DataTablesRequest
                 && columns.get(name).getSearch() != null
                 && !columns.get(name).getSearch().isEmpty());
     }
+    
     /**
      * Devuelve el texto de la búsqueda de una columna.
      * @param name Nombre de la columna.
@@ -137,6 +140,7 @@ public class DataTablesRequest
         
         return null;
     }
+    
     /**
      * Devuelve la página actual.
      * @return Página actual.
@@ -149,6 +153,7 @@ public class DataTablesRequest
             return 0;
         }
     }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -156,22 +161,27 @@ public class DataTablesRequest
     {
         return draw;
     }
+    
     public Integer getStart()
     {
         return start;
     }
+    
     public Integer getLength()
     {
         return length;
     }
+    
     public String getSearch()
     {
         return search;
     }
-    public HashMap<String, DataTablesColumn> getColumns()
+    
+    public Map<String, DataTablesColumn> getColumns()
     {
         return columns;
     }
+    
     public List<DataTablesOrder> getOrders()
     {
         return order;

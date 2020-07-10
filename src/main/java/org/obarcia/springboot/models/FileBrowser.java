@@ -19,34 +19,42 @@ public class FileBrowser
     {
         return url;
     }
+    
     public void setUrl(String value)
     {
         url = value;
     }
+    
     public String getName()
     {
         return name;
     }
+    
     public void setName(String value)
     {
         name = value;
     }
+    
     public String getFilename()
     {
         return filename;
     }
+    
     public void setFilename(String value)
     {
         filename = value;
     }
+    
     public Boolean getIsFile()
     {
         return isFile;
     }
+    
     public void setIsFile(Boolean value)
     {
         isFile = value;
     }
+    
     public Boolean getIsImage()
     {
         if (name != null) {

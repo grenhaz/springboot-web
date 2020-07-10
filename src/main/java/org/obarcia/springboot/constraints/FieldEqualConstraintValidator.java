@@ -32,6 +32,7 @@ public class FieldEqualConstraintValidator implements ConstraintValidator<FieldE
         secondFieldName = c.second();
         message = c.message();
     }
+    
     @Override
     public boolean isValid(Object candidate, ConstraintValidatorContext cvc)
     {
@@ -49,6 +50,7 @@ public class FieldEqualConstraintValidator implements ConstraintValidator<FieldE
                 return false;
             }
         } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+        	// Omitted
         }
         
         return true;

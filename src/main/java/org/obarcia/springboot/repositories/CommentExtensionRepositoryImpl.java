@@ -40,6 +40,7 @@ public class CommentExtensionRepositoryImpl implements CommentExtensionRepositor
         
         return em.createQuery(cq).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
     }
+    
     @Override
     public Long countByFilter(Map<String, Object> filters)
     {
@@ -52,7 +53,8 @@ public class CommentExtensionRepositoryImpl implements CommentExtensionRepositor
         
         return em.createQuery(cq).getSingleResult();
     }
-    private void applyFilters(CriteriaQuery cq, Root<Comment> root, CriteriaBuilder builder, Map<String, Object> filters)
+    
+    private void applyFilters(CriteriaQuery<?> cq, Root<Comment> root, CriteriaBuilder builder, Map<String, Object> filters)
     {
         List<Predicate> predicates = new ArrayList<>();
 

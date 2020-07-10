@@ -45,17 +45,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .logoutSuccessUrl("/user/login")
                 .permitAll();
     }
+    
     @Bean
     public PasswordEncoder passwordEncoder()
     {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
+    
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
     {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
+    
     /**
      * Validación del usuario.
      * @return Instancia del usuario o null en caso de no ser válido.

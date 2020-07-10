@@ -98,6 +98,7 @@ public class User
     {
         return Utilities.getElapsedTime(created);
     }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -105,70 +106,87 @@ public class User
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getEmail()
     {
         return email;
     }
+    
     public void setEmail(String value)
     {
         email = value;
     }
+    
     public String getNickname()
     {
         return nickname;
     }
+    
     public void setNickname(String value)
     {
         nickname = value;
     }
+    
     public String getUserRole()
     {
         return userRole;
     }
+    
     public void setUserRole(String value)
     {
         userRole = value;
     }
+    
     public Boolean getActive()
     {
         return active;
     }
+    
     public void setActive(Boolean value)
     {
         active = value;
     }
+    
     public String getAvatar()
     {
         return avatar;
     }
+    
     public void setAvatar(String value)
     {
         avatar = value;
     }
+    
     public Date getCreated()
     {
         return created;
     }
+    
     public void setCreated(Date value)
     {
         created = value;
     }
+    
     public String getPassword()
     {
         return password;
     }
+    
     public void setPassword(String value)
     {
         password = value;
     }
+    
     public String getUkey()
     {
         return ukey;
     }
+    
     public void setUkey(String value)
     {
         ukey = value;

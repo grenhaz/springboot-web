@@ -75,6 +75,7 @@ public class WebController
     {
         return getIndex(tag);
     }
+    
     /**
      * Devuelve la vista a partir de la etiqueta.
      * @param tag Etiqueta.
@@ -91,6 +92,7 @@ public class WebController
                 .addObject("moreComments",  articleService.getArticlesMoreComments(tag, 8))
                 .addObject("lastComments",  articleService.getLastComments(tag, 5));
     }
+    
     /**
      * Búsqueda de artículos.
      * @param tag Etiqueta.
@@ -106,6 +108,7 @@ public class WebController
                 .addObject("tag",           tag)
                 .addObject("search",        text);
     }
+    
     /**
      * Listado de artículos.
      * @param tag Etiqueta.
@@ -122,6 +125,7 @@ public class WebController
                 .addObject("importants",    articleService.getArticlesImportants(tag, type, 3))
                 .addObject("type",          type);
     }
+    
     /**
      * Página de un artículo.
      * @param id Identificador del artículo.
@@ -141,6 +145,7 @@ public class WebController
             throw new ArticleNotFoundException();
         }
     }
+    
     /**
      * Procesamiento de añadir un comentario a un artículo.
      * @param id Identificador del artículo.
@@ -188,6 +193,7 @@ public class WebController
             throw new ArticleNotFoundException();
         }
     }
+    
     // ****************************************
     // AJAX
     // ****************************************
@@ -204,6 +210,7 @@ public class WebController
                 .addObject("id",        id)
                 .addObject("comments",  articleService.getComments(id, 1, commentsPerPage));
     }
+    
     /**
      * Listado de comentarios.
      * @param id Identificador del artículo.
@@ -219,6 +226,7 @@ public class WebController
                 .addObject("id",        id)
                 .addObject("comments",  articleService.getComments(id, page, commentsPerPage));
     }
+    
     /**
      * Listado de artículos por búsqueda.
      * @param tag Tag.
@@ -235,6 +243,7 @@ public class WebController
                 .addObject("search",    text)
                 .addObject("articles",  articleService.getArticlesSearch(1, articlesPerPage, tag, text));
     }
+    
     /**
      * Listado de artículos por búsqueda.
      * @param tag Tag.
@@ -253,6 +262,7 @@ public class WebController
                 .addObject("search",    text)
                 .addObject("articles",  articleService.getArticlesSearch(page, articlesPerPage, tag, text));
     }
+    
     /**
      * Listado de artículos.
      * @param tag Etiqueta.
@@ -272,6 +282,7 @@ public class WebController
                 .addObject("menu",      menu)
                 .addObject("articles",  articleService.getArticlesAll(1, articlesPerPage, tag, type));
     }
+    
     /**
      * Listado de artículos.
      * @param tag Etiqueta.

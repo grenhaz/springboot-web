@@ -19,6 +19,7 @@ public interface UserRepository extends CrudRepository<User, Integer>, UserExten
      */
     @Query("SELECT u FROM User u WHERE ukey = :ukey")
     User findByUkey(@Param("ukey") String ukey);
+    
     /**
      * Devuelve un usuario por su Nickname.
      * @param nickname NIckname a buscar.
@@ -26,6 +27,7 @@ public interface UserRepository extends CrudRepository<User, Integer>, UserExten
      */
     @Query("SELECT u FROM User u WHERE nickname = :nickname")
     User findByNickname(@Param("nickname") String nickname);
+    
     /**
      * Devuelve un usuario por su e-mail.
      * @param email e-mail a buscar.

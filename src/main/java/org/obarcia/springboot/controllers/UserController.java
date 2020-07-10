@@ -88,7 +88,7 @@ public class UserController
      * @param error true si se produjo algún error durante el login.
      * @return Vista resultante.
      */
-    @RequestMapping("/login")
+    @GetMapping("/login")
     @PreAuthorize("!isAuthenticated()")
     public ModelAndView actionLogin(
             @RequestParam(value = "error", required = false) String error)
@@ -96,6 +96,7 @@ public class UserController
         return new ModelAndView("user/login")
             .addObject("error", error);
     }
+    
     /**
      * Proceso de logout.
      * @param request Intancia de la petición
@@ -114,6 +115,7 @@ public class UserController
         }
         return "redirect:/";
     }
+    
     /**
      * Formulario de registro.
      * @return Vista resultante.
@@ -125,6 +127,7 @@ public class UserController
         return new ModelAndView("user/register")
             .addObject("model", new RegisterForm());
     }
+    
     /**
      * Procesamiento del formulario de registro.
      * @param form Instancia del formulario.
@@ -172,6 +175,7 @@ public class UserController
         return new ModelAndView("user/register")
             .addObject("model", form);
     }
+    
     /**
      * Proceso de activación de un usuario tras registrarse.
      * @param ukey Clave del usuario.
@@ -214,6 +218,7 @@ public class UserController
         
         throw new PageNotFoundException();
     }
+    
     /**
      * Recuperar la contraseña de un usuario.
      * @param ukey Clave del usuario.
@@ -255,6 +260,7 @@ public class UserController
         
         throw new PageNotFoundException();
     }
+    
     /**
      * Formulario de recuperación de contraseña.
      * @return Vista resultante.
@@ -266,6 +272,7 @@ public class UserController
         return new ModelAndView("user/forgot")
             .addObject("model", new ForgotForm());
     }
+    
     /**
      * Procesamiento del formulario de recuperación de contraseña.
      * @param form Instancia del formulario.
@@ -310,6 +317,7 @@ public class UserController
         return new ModelAndView("user/forgot")
             .addObject("model", form);
     }
+    
     /**
      * Perfil del usuario.
      * @return Vista resultante.
@@ -336,6 +344,7 @@ public class UserController
         
         return new ModelAndView("redirect:/");
     }
+    
     /**
      * Procesamiento del formulario de cambio de perfil.
      * @param form Instancia del formulario.
@@ -382,6 +391,7 @@ public class UserController
             .addObject("form", form)
             .addObject("comments", articleService.getLastCommentsByUser(form.getId(), 8));
     }
+    
     /**
      * Cambiar contraseña del usuario.
      * @return Vista resultante.
@@ -405,6 +415,7 @@ public class UserController
         
         return new ModelAndView("redirect:/");
     }
+    
     /**
      * Procesamiento del formulario de cambio de contraseña del usuario.
      * @param form Instancia del formulario.
@@ -450,6 +461,7 @@ public class UserController
         return new ModelAndView("user/password")
             .addObject("form", form);
     }
+    
     /**
      * Listado de avatares para selección en le formulario de cambio de perfil.
      * @param field Campo donde asignar el nuevo avatar.

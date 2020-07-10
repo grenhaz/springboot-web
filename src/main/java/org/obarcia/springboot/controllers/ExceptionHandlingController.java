@@ -34,6 +34,7 @@ public class ExceptionHandlingController
             .addObject("submessage", "")
             .addObject("exception", ex);
     }
+    
     /**
      * Excepción de página no encontrada.
      * @param ex Instancia de la excepción.
@@ -48,6 +49,7 @@ public class ExceptionHandlingController
             .addObject("submessage", "")
             .addObject("exception", ex);
     }
+    
     /**
      * Excepción de acceso denegado.
      * @param ex Instancia de la excepción.
@@ -62,6 +64,7 @@ public class ExceptionHandlingController
             .addObject("submessage", "")
             .addObject("exception", ex);
     }
+    
     /**
      * Excepción de genérica de error interno.
      * @param ex Instancia de la excepción.

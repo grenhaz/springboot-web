@@ -37,6 +37,7 @@ public class NicknameConstraintValidator implements ConstraintValidator<Nickname
         fieldName = c.field();
         message = c.message();
     }
+    
     @Override
     public boolean isValid(Object candidate, ConstraintValidatorContext cvc)
     {
@@ -56,6 +57,7 @@ public class NicknameConstraintValidator implements ConstraintValidator<Nickname
                 return false;
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        	// Omitted
         }
         
         return false;

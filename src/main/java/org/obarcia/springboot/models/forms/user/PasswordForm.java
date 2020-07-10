@@ -39,22 +39,27 @@ public class PasswordForm
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getPassword()
     {
         return password;
     }
+    
     public void setPassword(String value)
     {
         password = value;
     }
+    
     public String getPasswordRepeat()
     {
         return passwordRepeat;
     }
+    
     public void setPasswordRepeat(String value)
     {
         passwordRepeat = value;

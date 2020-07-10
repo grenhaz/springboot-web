@@ -35,33 +35,13 @@ public class AccountDetails extends User
      */
     public AccountDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, String nickname, String avatar, int id)
     {
-        super(username, password, authorities);
+        super(username, password, true, true, true, true, authorities);
         
         this.id = id;
         this.nickname = nickname;
         this.avatar = avatar;
     }
-    /**
-     * Constructor de la clase.
-     * @param username Nombre del usuario.
-     * @param password Contraseña.
-     * @param enabled Habilitado.
-     * @param accountNonExpired Si la cuenta expira.
-     * @param credentialsNonExpired Si las credenciles expiran.
-     * @param accountNonLocked Si la cuenta no está bloqueada.
-     * @param authorities Autorizaciones (Roles).
-     * @param nickname Nickname.
-     * @param avatar Fichero del avatar.
-     * @param id Identificador del usuario.
-     */
-    public AccountDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String nickname, String avatar, int id)
-    {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        
-        this.id = id;
-        this.nickname = nickname;
-        this.avatar = avatar;
-    }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -69,18 +49,22 @@ public class AccountDetails extends User
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getNickname()
     {
         return nickname;
     }
+    
     public void setNickname(String value)
     {
         nickname = value;
     }
+    
     public String getAvatar()
     {
         if (avatar != null && !avatar.isEmpty()) {
@@ -89,6 +73,7 @@ public class AccountDetails extends User
             return "anonymous.png";
         }
     }
+    
     public void setAvatar(String value)
     {
         avatar = value;

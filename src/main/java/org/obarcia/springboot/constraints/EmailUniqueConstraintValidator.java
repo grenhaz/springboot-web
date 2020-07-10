@@ -36,6 +36,7 @@ public class EmailUniqueConstraintValidator implements ConstraintValidator<Email
         fieldName = c.field();
         message = c.message();
     }
+    
     @Override
     public boolean isValid(Object candidate, ConstraintValidatorContext cvc)
     {
@@ -55,6 +56,7 @@ public class EmailUniqueConstraintValidator implements ConstraintValidator<Email
                 return false;
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        	// Omitted
         }
         
         return false;

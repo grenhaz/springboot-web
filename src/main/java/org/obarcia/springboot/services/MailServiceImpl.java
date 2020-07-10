@@ -44,6 +44,7 @@ public class MailServiceImpl implements MailService
             Logger.getLogger(MailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     @Override
     public void sendmailRecovery(HttpServletRequest request, User user)
     {

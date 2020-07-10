@@ -24,7 +24,7 @@ public class ListPagination<T>
     /**
      * Registros.
      */
-    private List records;
+    private List<T> records;
     
     /**
      * Devuelve la página actual.
@@ -38,6 +38,7 @@ public class ListPagination<T>
         
         return 1;
     }
+    
     /**
      * Devuelve el número de páginas.
      * @return Número de paginas.
@@ -54,6 +55,7 @@ public class ListPagination<T>
         
         return 1;
     }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -61,30 +63,37 @@ public class ListPagination<T>
     {
         return offset;
     }
+    
     public void setOffset(Integer value)
     {
         offset = value;
     }
+    
     public Integer getLimit()
     {
         return limit;
     }
+    
     public void setLimit(Integer value)
     {
         limit = value;
     }
+    
     public Long getTotal()
     {
         return total;
     }
+    
     public void setTotal(Long value)
     {
         total = value;
     }
+    
     public List<T> getRecords()
     {
         return records;
     }
+    
     public void setRecords(List<T> value)
     {
         records = value;

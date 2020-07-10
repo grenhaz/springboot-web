@@ -3,6 +3,7 @@ package org.obarcia.springboot.models.forms.article;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.GeneratedValue;
@@ -21,9 +22,9 @@ public class ArticleForm
     /**
      * Formato de fecha
      */
-    private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd/MM/yyyy");
-    private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("HH:mm");
-    private static final SimpleDateFormat FORMAT_FORM = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private final SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+    private final SimpleDateFormat formatForm = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     
     /**
      * Identificador.
@@ -92,12 +93,13 @@ public class ArticleForm
      */
     public String getTags()
     {
-        if (tags.size() > 0) {
+        if (!tags.isEmpty()) {
             return "[" + String.join("][", tags) + "]";
         }
         
         return "";
     }
+    
     /**
      * Asigna las etiquetas.
      * @param value Valor de las etiquetas.
@@ -112,12 +114,11 @@ public class ArticleForm
                 .replaceAll("\\]", "")
                 .split(",");
             if (list != null && list.length > 0) {
-                for (String l: list) {
-                    tags.add(l);
-                }
+            	Collections.addAll(tags, list);
             }
         }
     }
+    
     /**
      * Devuelve la fecha de publicación.
      * 
@@ -126,12 +127,14 @@ public class ArticleForm
     public Date getPublish()
     {
         try {
-            return FORMAT_FORM.parse(publishDate + " " + publishTime);
+            return formatForm.parse(publishDate + " " + publishTime);
         } catch (ParseException ex) {
+        	// Omitted
         }
         
         return null;
     }
+    
     /**
      * Asigna la fecha de publicacción.
      * @param value Valor de la fecha.
@@ -141,9 +144,10 @@ public class ArticleForm
         if (value == null) {
             value = new Date();
         }
-        publishDate = FORMAT_DATE.format(value);
-        publishTime = FORMAT_TIME.format(value);
+        publishDate = formatDate.format(value);
+        publishTime = formatTime.format(value);
     }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -151,95 +155,118 @@ public class ArticleForm
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getType()
     {
         return type;
     }
+    
     public void setType(String value)
     {
         type = value;
     }
+    
     public String getTitle()
     {
         return title;
     }
+    
     public void setTitle(String value)
     {
         title = value;
     }
+    
     public String getDescription()
     {
         return description;
     }
+    
     public void setDescription(String value)
     {
         description = value;
     }
+    
     public String getImage()
     {
         return image;
     }
+    
     public void setImage(String value)
     {
         image = value;
     }
+    
     public String getContent()
     {
         return content;
     }
+    
     public void setContent(String value)
     {
         content = value;
     }
+    
     public String getPublishDate()
     {
         return publishDate;
     }
+    
     public void setPublishDate(String value)
     {
         publishDate = value;
     }
+    
     public String getPublishTime()
     {
         return publishTime;
     }
+    
     public void setPublishTime(String value)
     {
         publishTime = value;
     }
+    
     public List<String> getTagsCheckbox()
     {
         return tags;
     }
+    
     public void setTagsCheckbox(List<String> value)
     {
         tags.clear();
         tags.addAll(value);
     }
+    
     public Boolean getImportant()
     {
         return important;
     }
+    
     public void setImportant(Boolean value)
     {
         important = value;
     }
+    
     public Double getScore()
     {
         return score;
     }
+    
     public void setScore(Double value)
     {
         score = value;
     }
+    
     public Boolean getActive()
     {
         return active;
     }
+    
     public void setActive(Boolean value)
     {
         active = value;

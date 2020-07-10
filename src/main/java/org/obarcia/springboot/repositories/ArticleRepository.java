@@ -20,6 +20,7 @@ public interface ArticleRepository extends CrudRepository<Article, Integer>, Art
      * @return Listado de artículos.
      */
     List<Article> findAll(Pageable pageable);
+    
     /**
      * Buscar un artículos por su título.
      * @param title Título a buscar.
@@ -27,6 +28,7 @@ public interface ArticleRepository extends CrudRepository<Article, Integer>, Art
      */
     @Query("SELECT a FROM Article a WHERE title = :title")
     Article findByTitle(@Param("title")String title);
+    
     /**
      * Devuelve el total de artículos por tipo.
      * @param type Tipo de artículo.
@@ -34,6 +36,7 @@ public interface ArticleRepository extends CrudRepository<Article, Integer>, Art
      */
     @Query("SELECT COUNT(a) FROM Article a WHERE type = :type")
     Long countByType(@Param("type") String type);
+    
     /**
      * Devuelve el listado de artículos por tipo paginado.
      * @param type Tipo del artículo.

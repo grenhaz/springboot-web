@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService
         response.setRecordsTotal(userRepository.count());
         return response;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public User getUserById(int id)
@@ -79,24 +80,28 @@ public class UserServiceImpl implements UserService
         
         return null;
     }
+    
     @Override
     @Transactional(readOnly = true)
     public User getUserByEmail(String email)
     {
         return userRepository.findByEmail(email);
     }
+    
     @Override
     @Transactional(readOnly = true)
     public User getUserByNickname(String nickname)
     {
         return userRepository.findByNickname(nickname);
     }
+    
     @Override
     @Transactional(readOnly = true)
     public User getUserByUkey(String ukey)
     {
         return userRepository.findByUkey(ukey);
     }
+    
     @Override
     @Transactional
     public void save(User user) throws SaveException

@@ -15,6 +15,7 @@ public interface BrowserService
      * @return Listado de avatares.
      */
     List<String> getAvatars();
+    
     /**
      * Devuelve un listado de ficheros.
      * @param path Path de busqueda.

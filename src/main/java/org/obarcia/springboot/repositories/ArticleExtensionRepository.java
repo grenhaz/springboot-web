@@ -13,5 +13,6 @@ import org.springframework.data.domain.Pageable;
 public interface ArticleExtensionRepository
 {
     List<Article> findByFilter(Map<String, Object> filters, Pageable pageable);
+    
     Long countByFilter(Map<String, Object> filters);
 }

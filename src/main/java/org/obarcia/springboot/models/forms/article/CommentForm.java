@@ -24,6 +24,7 @@ public class CommentForm
     {
         return content;
     }
+    
     public void setContent(String value)
     {
         content = value;

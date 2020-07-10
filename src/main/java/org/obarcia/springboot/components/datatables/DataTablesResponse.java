@@ -33,30 +33,37 @@ public class DataTablesResponse<T>
     {
         return draw;
     }
+    
     public void setDraw(Integer value)
     {
         draw = value;
     }
+    
     public Long getRecordsTotal()
     {
         return recordsTotal;
     }
+    
     public void setRecordsTotal(Long value)
     {
         recordsTotal = value;
     }
+    
     public Long getRecordsFiltered()
     {
         return recordsFiltered;
     }
+    
     public void setRecordsFiltered(Long value)
     {
         recordsFiltered = value;
     }
+    
     public List<T> getData()
     {
         return data;
     }
+    
     public void setData(List<T> value)
     {
         data = value;

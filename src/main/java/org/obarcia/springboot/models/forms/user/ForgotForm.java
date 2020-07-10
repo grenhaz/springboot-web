@@ -26,6 +26,7 @@ public class ForgotForm
     {
         return email;
     }
+    
     public void setEmail(String value)
     {
         email = value;

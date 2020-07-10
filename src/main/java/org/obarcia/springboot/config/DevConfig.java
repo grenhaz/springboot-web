@@ -1,6 +1,8 @@
 package org.obarcia.springboot.config;
 
 import java.util.Date;
+import java.util.Random;
+
 import javax.annotation.PostConstruct;
 import org.obarcia.springboot.exceptions.SaveException;
 import org.obarcia.springboot.models.entity.article.Article;
@@ -22,6 +24,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Profile("dev")
 public class DevConfig
 {
+	private static final String ROLE_ADMIN = "ROLE_ADMIN";
+	private static final String ROLE_USER = "ROLE_USER";
+	
+	private final Random random = new Random();
+	
     /**
      * Instancia del servicio de usuarios.
      */
@@ -42,12 +49,12 @@ public class DevConfig
         try {
             String content = "<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu</p><p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p><p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,</p>";
             // Usuarios
-            createUser("administrador", null, "admin@test.com", "password", "ROLE_ADMIN");
-            createUser("obarcia", "avatar1.jpg", "user@test.com", "password", "ROLE_USER");
-            createUser("Heck", "avatar2.jpg", "yo@test.com", "password", "ROLE_USER");
-            createUser("Tester", "avatar3.jpg", "yo2@test.com", "password", "ROLE_USER");
-            createUser("Tester2", "avatar3.jpg", "yo3@test.com", "password", "ROLE_USER");
-            createUser("Tester3", "avatar3.jpg", "yo4@test.com", "password", "ROLE_USER");
+            createUser("administrador", null, "admin@test.com", "password", ROLE_ADMIN);
+            createUser("obarcia", "avatar1.jpg", "user@test.com", "password", ROLE_USER);
+            createUser("Heck", "avatar2.jpg", "yo@test.com", "password", ROLE_USER);
+            createUser("Tester", "avatar3.jpg", "yo2@test.com", "password", ROLE_USER);
+            createUser("Tester2", "avatar3.jpg", "yo3@test.com", "password", ROLE_USER);
+            createUser("Tester3", "avatar3.jpg", "yo4@test.com", "password", ROLE_USER);
             // Artículos
             createArticle("new", "game.jpg", "Mañana es el cierre de servidores de Demon's Souls", "El clásico de PlayStation 3 cortará a partir de mañana sus posibilidades on-line definitivamente.", content, "[PC]", null, true, 3);
             createArticle("new", "game1.jpg", "El rodaje de la serie televisiva de Halo comenzaría a finales de 2018", "El afamado director Steven Spielberg continuaría vinculado al proyecto.", content, "[PC][PS4]", null, false, 5);
@@ -60,10 +67,11 @@ public class DevConfig
             createArticle("new", "game8.jpg", "Las ventas de PS4 en Japón mejoran todos los años desde su estreno", "Cerró su cuarto año en el mercado nipón con 2.083.974 unidades vendidas.", content, "[PS4]", null, true, 32);
             createArticle("new", "game9.jpg", "Habrá cambios en la cúpula directiva de Sony Interactive Entertainment", "Se efectuarán a partir del próximo 1 de abril y están implicados distintos empresarios.", content, "[PS4]", null, false, 9);
             createArticle("special", "game10.jpg", "Reportaje: Juegos olvidados", "", content, "[PC]", null, false, 4);
-            //createArticle(12, "new", "game.jpg", "qwe", "qwe", content, "[PC]", null, true, 3);
         } catch (SaveException ex) {
+        	// Omitted
         }
     }
+    
     /**
      * Crear / Actualizar un artículo.
      * @param type Tipo de artículo.
@@ -121,8 +129,8 @@ public class DevConfig
             for (int i = 0; i < comments; i++) {
                 Comment c = new Comment();
                 c.setArticle(article);
-                c.setUser(users[(int) (Math.random() * 5)]);
-                c.setContent(messages[(int) (Math.random() * 3)]);
+                c.setUser(users[random.nextInt() * 5]);
+                c.setContent(messages[random.nextInt() * 3]);
                 c.setPublish(new Date());
                 c.setErased(false);
                 articleService.save(c);
@@ -131,6 +139,7 @@ public class DevConfig
         
         return article;
     }
+    
     /**
      * Crear / Actualizar un usuario.
      * @param nickname Nickname.

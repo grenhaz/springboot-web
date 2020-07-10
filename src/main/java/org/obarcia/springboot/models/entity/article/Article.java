@@ -123,6 +123,7 @@ public class Article
         
         return "";
     }
+    
     /**
      * Devuelve la fecha de publicación formateada.
      * @return Fecha de publicación formateada.
@@ -131,6 +132,7 @@ public class Article
     {
         return Utilities.getElapsedTime(publish);
     }
+    
     // ******************************************
     // GETTER & SETTER
     // ******************************************
@@ -138,94 +140,117 @@ public class Article
     {
         return id;
     }
+    
     public void setId(Integer value)
     {
         id = value;
     }
+    
     public String getImage()
     {
         return image;
     }
+    
     public void setImage(String value)
     {
         image = value;
     }
+    
     public String getType()
     {
         return type;
     }
+    
     public void setType(String value)
     {
         type = value;
     }
+    
     public String getTitle()
     {
         return title;
     }
+    
     public void setTitle(String value)
     {
         title = value;
     }
+    
     public String getDescription()
     {
         return description;
     }
+    
     public void setDescription(String value)
     {
         description = value;
     }
+    
     public Date getPublish()
     {
         return publish;
     }
+    
     public void setPublish(Date value)
     {
         publish = value;
     }
+    
     public String getTags()
     {
         return tags;
     }
+    
     public void setTags(String value)
     {
         tags = value;
     }
+    
     public Boolean getImportant()
     {
         return important;
     }
+    
     public void setImportant(Boolean value)
     {
         important = value;
     }
+    
     public Double getScore()
     {
         return score;
     }
+    
     public void setScore(Double value)
     {
         score = value;
     }
+    
     public Boolean getActive()
     {
         return active;
     }
+    
     public void setActive(Boolean value)
     {
         active = value;
     }
+    
     public String getContent()
     {
         return content;
     }
+    
     public void setContent(String value)
     {
         content = value;
     }
+    
     public Set<Comment> getComments()
     {
         return comments;
     }
+    
     public int getCommentsCount()
     {
         return comments.size();
